@@ -6,13 +6,13 @@ import (
 	"io/fs"
 )
 
-//go:embed definitions/ed/elements/html.json
+//go:embed specs/curated/elements/html.json
 var Html_defs []byte
 
-//go:embed definitions/curated/idlparsed/*.json
+//go:embed specs/curated/idlparsed/*.json
 var WebRef embed.FS
 
 func OpenIdlParsed(name string) (fs.File, error) {
-	filename := fmt.Sprintf("definitions/curated/idlparsed/%s.json", name)
+	filename := fmt.Sprintf("specs/curated/idlparsed/%s.json", name)
 	return WebRef.Open(filename)
 }
