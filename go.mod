@@ -1,4 +1,4 @@
-module github.com/gost-dom/code-gen
+module github.com/gost-dom/webref
 
 go 1.23.4
 

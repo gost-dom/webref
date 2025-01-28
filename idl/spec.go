@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/gost-dom/code-gen/webref"
+	"github.com/gost-dom/webref"
 )
 
 type RetType struct {
