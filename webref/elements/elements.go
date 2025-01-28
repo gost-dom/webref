@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/gost-dom/browser/code-gen/webref"
+	"github.com/gost-dom/code-gen/webref"
 )
 
 type ElementJSON struct {

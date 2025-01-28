@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	. "github.com/gost-dom/browser/code-gen/webref/idl"
+	. "github.com/gost-dom/code-gen/webref/idl"
 )
 
 var _ = Describe("Idl/Interface", func() {
