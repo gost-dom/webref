@@ -10,7 +10,7 @@ import (
 var _ = Describe("Idl/Interface", func() {
 	Describe("Includes", func() {
 		It("Should have HTMLAnchorElement include HTMLHyperlinkElementUtils", func() {
-			idl, err := LoadIdlParsed("html")
+			idl, err := Load("html")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(
 				idl.Interfaces["HTMLAnchorElement"].Includes,
@@ -23,7 +23,7 @@ var _ = Describe("Idl/Interface", func() {
 
 	Describe("Includes", func() {
 		It("Should have right operations on url.URL", func() {
-			idl, err := LoadIdlParsed("url")
+			idl, err := Load("url")
 			Expect(err).ToNot(HaveOccurred())
 			ops := idl.Interfaces["URL"].Operations
 			Expect(ops).To(ContainElement(HaveField("Name", "toJSON")))
