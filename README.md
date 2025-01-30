@@ -21,8 +21,16 @@ Features are added as
 
 This package is divided into subpackages:
 
-- `html` contains mapping from HTML element tag names to IDL interface name.
+- `elements` contains mapping from HTML element tag names to IDL interface name.
 - `idl` contains the Web IDL specifications.
+
+### Package `elements`
+
+
+
+### Package `idl`
+
+
 
 ## Coding guidelines
 

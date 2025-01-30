@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/gost-dom/webref"
+	"github.com/gost-dom/webref/internal/specs"
 )
 
 type ElementJSON struct {
@@ -48,6 +48,6 @@ func (n Elements) GetTagNameForInterfaceError(i string) (res string, err error) 
 
 func Load() (Elements, error) {
 	output := ElementsJSON{}
-	err := json.Unmarshal(webref.Html_defs, &output)
+	err := json.Unmarshal(specs.Html_defs, &output)
 	return Elements(output), err
 }

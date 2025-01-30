@@ -2,13 +2,14 @@ package idl
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"iter"
 	"log/slog"
 	"slices"
 	"strings"
 
-	"github.com/gost-dom/webref"
+	"github.com/gost-dom/webref/internal/specs"
 )
 
 type RetType struct {
@@ -95,7 +96,7 @@ func (s *Spec) initialize() {
 // LoadIdlParsed loads a files from the /curated/idlpased directory containing
 // specifications of the interfaces.
 func LoadIdlParsed(name string) (Spec, error) {
-	file, err := webref.OpenIdlParsed(name)
+	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", name))
 	if err != nil {
 		return Spec{}, err
 	}
