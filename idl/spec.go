@@ -93,9 +93,9 @@ func (s *Spec) initialize() {
 	}
 }
 
-// LoadIdlParsed loads a files from the /curated/idlpased directory containing
+// Load loads a files from the /curated/idlpased directory containing
 // specifications of the interfaces.
-func LoadIdlParsed(name string) (Spec, error) {
+func Load(name string) (Spec, error) {
 	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", name))
 	if err != nil {
 		return Spec{}, err
