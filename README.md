@@ -26,11 +26,32 @@ This package is divided into subpackages:
 
 ### Package `elements`
 
+This exposes element tag name to interface name mapping, i.e., which type is
+used at runtime to handle a specific element.
 
+E.g., an `<a>` element in the HTML will be handled by an `HTMLAnchorElement` in
+code.
+
+There is not a one-to-one mapping between tag names, and elements names. In
+the html specs, multiple elements are handled by the generic `HTMLElement`.
+Examples include, `<article>`, `<section>`, and `<nav>`. Then are all elements
+for representation with no behaviour associated.
 
 ### Package `idl`
 
+Contain specifications for the interfaces available at runtime; and made
+accessible to client-side code.
 
+```
+spec, err := idl.Load("html")
+anchor := spec.Interfaces["HTMLAnchorElement"]
+for _, o := anchor.Attributes {
+  // ...
+}
+for _, o := anchor.Operations {
+  // ...
+}
+```
 
 ## Coding guidelines
 
