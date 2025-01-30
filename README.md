@@ -6,18 +6,9 @@ Data is sourced from [github.com/w3c/webref](https://github.com/w3c/webref)
 
 > [!IMPORTANT]
 >
-> This tool is not completed, in that not all information in the IDL specs are
-> exposed. If you find that you need something not exposed, please file an
-> issue. Or even better, make a PR.
-
-## About the compiled file size
-
-The intention of this is to be a tool for the build process of other go tools
-targeting the web, not runtime use in web applications.
-
-For that reason, minimising the size of compiled library has not been a
-priority. The compiled library takes up about 16Mb on disk, which is mainly
-embedded data files, which of course takes up space in source code too.[^1]
+> This tool is not complete. Not all IDL information are exposed. If you find
+> that you need something not exposed, please file an issue. Or even better,
+> make a PR.
 
 ## Completeness
 
@@ -32,10 +23,6 @@ This package is divided into subpackages:
 
 - `html` contains mapping from HTML element tag names to IDL interface name.
 - `idl` contains the Web IDL specifications.
-
-[^1]: This can, and will probably be shrunk by stripping irrelevant data from
-    the JSON files. E.g., duplication of original Web IDL files, as well as a
-significant amount of whitespace.
 
 ## Coding guidelines
 
@@ -59,3 +46,37 @@ however.
 
 Eventually, the old model will be removed (or unexported), leaving only the new
 model.
+
+## About the compiled file size
+
+The compiled library takes up about 6Mb on disk, which is mainly embedded data
+files, which also takes up space in source code.[^1]
+
+It is not a priotity to reduce this. This is a tool intended for design-time
+use, not runtime.
+
+However, a PR to reduce compiled file size would be welcome, though a more
+complete model should be 
+
+### Reducing file size
+
+The file size (and source code) could be reduced by one of two approaces
+
+- Parse IDL files instead of JSON
+- Generate Go code from JSON files
+
+#### Parse IDL files instead of JSON
+
+The JSON is a very verbose representation of the source IDL. By parsing and
+embedding IDL files, the source code, and compiled output would be significantly
+smaller.
+
+#### Auto-generate Go code
+
+You could generate Go source files with global variables initialised to the
+values representing the data.
+
+---
+
+[^1]: The JSON data from the webref submodule is >15Mb in size. This tool copies
+    and strips useless fields and whitespace, reducing the JSON data to ~5Mb.
