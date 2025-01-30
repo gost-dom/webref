@@ -6,10 +6,8 @@ import (
 	"path"
 )
 
-//go:embed curated/elements/html.json
-var Html_defs []byte
-
 //go:embed curated/idlparsed/*.json
+//go:embed curated/elements/*.json
 var WebRef embed.FS
 
 func Open(name string) (fs.File, error) {

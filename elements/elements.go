@@ -6,6 +6,7 @@ package elements
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 
 	"github.com/gost-dom/webref/internal/specs"
 )
@@ -19,7 +20,7 @@ type ElementsJSON struct {
 	Elements []ElementJSON `json:"elements"`
 }
 
-type Elements ElementsJSON
+type Elements = ElementsJSON
 
 // GetTagNameForInterface finds the tagname for an element that is represented
 // by interface i in the DOM. For example, the anchor tag, <a>, is represented
@@ -46,8 +47,16 @@ func (n Elements) GetTagNameForInterfaceError(i string) (res string, err error) 
 	return
 }
 
-func Load() (Elements, error) {
-	output := ElementsJSON{}
-	err := json.Unmarshal(specs.Html_defs, &output)
-	return Elements(output), err
+func Load(name string) (res Elements, err error) {
+	var (
+		b []byte
+		r io.Reader
+	)
+	if r, err = specs.Open(fmt.Sprintf("elements/%s.json", name)); err == nil {
+		if b, err = io.ReadAll(r); err == nil {
+			err = json.Unmarshal(b, &res)
+			fmt.Println(string(b))
+		}
+	}
+	return
 }
