@@ -55,7 +55,6 @@ func Load(name string) (res Elements, err error) {
 	if r, err = specs.Open(fmt.Sprintf("elements/%s.json", name)); err == nil {
 		if b, err = io.ReadAll(r); err == nil {
 			err = json.Unmarshal(b, &res)
-			fmt.Println(string(b))
 		}
 	}
 	return
