@@ -11,10 +11,9 @@ import "iter"
 //		attribute DOMString name;
 //	};
 type Interface struct {
-	// Don't rely on this, it only exists during a refactoring process
-	InternalSpec Name
-	Name         string
-	Attributes   []Attribute
+	Attributes  []Attribute
+	Inheritance string
+	Name        string
 	// Operations are the callable methods defined on the object. Note that the
 	// IDL spec allows for overloads, which is represented by multiple entries
 	// with the same name.
@@ -23,6 +22,9 @@ type Interface struct {
 	//
 	// See also: https://webidl.spec.whatwg.org/#includes-statement
 	Includes []Interface
+
+	// Don't rely on this, it only exists during a refactoring process
+	InternalSpec Name
 }
 
 // Represents an attribute on an IDL interface
