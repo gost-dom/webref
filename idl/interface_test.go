@@ -15,10 +15,13 @@ type IdlInterfacesTestSuite struct {
 	gomega.Gomega
 	html Spec
 	url  Spec
+	dom  Spec
 }
 
 func (s *IdlInterfacesTestSuite) SetupSuite() {
 	var err error
+	s.dom, err = Load("dom")
+	s.Assert().NoError(err)
 	s.html, err = Load("html")
 	s.Assert().NoError(err)
 	s.url, err = Load("url")
@@ -46,6 +49,12 @@ func (s *IdlInterfacesTestSuite) TestUrlParseIsStatic() {
 			HaveField("Name", "parse"),
 			HaveField("Static", true)),
 		))
+}
+
+func (s *IdlInterfacesTestSuite) TestNodeInheritsFromEventTarget() {
+	node, ok := s.dom.Interfaces["Node"]
+	s.Assert().True(ok)
+	s.Assert().Equal("EventTarget", node.Inheritance)
 }
 
 func TestExampleTestSuite(t *testing.T) {

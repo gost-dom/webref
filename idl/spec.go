@@ -42,6 +42,7 @@ func (s *Spec) createInterface(n Name) Interface {
 	intf := Interface{
 		InternalSpec: n,
 		Name:         n.Name,
+		Inheritance:  n.Inheritance,
 		Includes:     make([]Interface, len(includedNames)),
 		Attributes:   make([]Attribute, len(jsonAttributes)),
 		Operations:   make([]Operation, len(jsonOperations)),
