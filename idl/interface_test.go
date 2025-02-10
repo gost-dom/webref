@@ -1,36 +1,53 @@
 package idl_test
 
 import (
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
+	"testing"
 
 	. "github.com/gost-dom/webref/idl"
+
+	"github.com/onsi/gomega"
+	. "github.com/onsi/gomega"
+	"github.com/stretchr/testify/suite"
 )
 
-var _ = Describe("Idl/Interface", func() {
-	Describe("Includes", func() {
-		It("Should have HTMLAnchorElement include HTMLHyperlinkElementUtils", func() {
-			idl, err := Load("html")
-			Expect(err).ToNot(HaveOccurred())
-			Expect(
-				idl.Interfaces["HTMLAnchorElement"].Includes,
-			).To(
-				ContainElement(HaveField("Name", "HTMLHyperlinkElementUtils")),
-			)
-			// Equal([]string{"HTMLHyperlinkElementUtils"}))
-		})
-	})
+type IdlInterfacesTestSuite struct {
+	suite.Suite
+	gomega.Gomega
+	html Spec
+	url  Spec
+}
 
-	Describe("Includes", func() {
-		It("Should have right operations on url.URL", func() {
-			idl, err := Load("url")
-			Expect(err).ToNot(HaveOccurred())
-			ops := idl.Interfaces["URL"].Operations
-			Expect(ops).To(ContainElement(HaveField("Name", "toJSON")))
-			Expect(ops).To(ContainElement(SatisfyAll(
-				HaveField("Name", "parse"),
-				HaveField("Static", true)),
-			))
-		})
-	})
-})
+func (s *IdlInterfacesTestSuite) SetupSuite() {
+	var err error
+	s.html, err = Load("html")
+	s.Assert().NoError(err)
+	s.url, err = Load("url")
+	s.Assert().NoError(err)
+}
+
+func (s *IdlInterfacesTestSuite) SetupTest() {
+	s.Gomega = gomega.NewWithT(s.T())
+}
+
+func (s *IdlInterfacesTestSuite) TestAnchorIncludeHyperlinkUtils() {
+	actual := s.html.Interfaces["HTMLAnchorElement"].Includes
+	s.Expect(actual).To(ContainElement(HaveField("Name", "HTMLHyperlinkElementUtils")))
+}
+
+func (s *IdlInterfacesTestSuite) TestUrlHasToJSONMethod() {
+	ops := s.url.Interfaces["URL"].Operations
+	s.Expect(ops).To(ContainElement(HaveField("Name", "toJSON")))
+}
+
+func (s *IdlInterfacesTestSuite) TestUrlParseIsStatic() {
+	ops := s.url.Interfaces["URL"].Operations
+	s.Expect(ops).To(
+		ContainElement(SatisfyAll(
+			HaveField("Name", "parse"),
+			HaveField("Static", true)),
+		))
+}
+
+func TestExampleTestSuite(t *testing.T) {
+	suite.Run(t, new(IdlInterfacesTestSuite))
+}
