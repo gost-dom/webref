@@ -30,7 +30,8 @@ type Spec struct {
 	//
 	// This property will eventually be removed
 	ParsedIdlFile
-	Interfaces map[string]Interface
+	Interfaces      map[string]Interface
+	InterfaceMixins map[string]InterfaceMixin
 }
 
 func (s *Spec) createInterface(n Name) Interface {
@@ -40,12 +41,14 @@ func (s *Spec) createInterface(n Name) Interface {
 	jsonOperations := slices.Collect(n.Operations())
 
 	intf := Interface{
-		InternalSpec: n,
-		Name:         n.Name,
-		Inheritance:  n.Inheritance,
-		Includes:     make([]Interface, len(includedNames)),
-		Attributes:   make([]Attribute, len(jsonAttributes)),
-		Operations:   make([]Operation, len(jsonOperations)),
+		BaseInterface: BaseInterface{
+			Name:         n.Name,
+			Attributes:   make([]Attribute, len(jsonAttributes)),
+			Operations:   make([]Operation, len(jsonOperations)),
+			InternalSpec: n,
+		},
+		Inheritance: n.Inheritance,
+		Includes:    make([]Interface, len(includedNames)),
 	}
 	for i, n := range includedNames {
 		intf.Includes[i] = s.createInterface(s.IdlNames[n])
@@ -89,8 +92,14 @@ func createMethodArguments(n NameMember) []Argument {
 // JSON data.
 func (s *Spec) initialize() {
 	s.Interfaces = make(map[string]Interface)
+	s.InterfaceMixins = make(map[string]InterfaceMixin)
 	for name, spec := range s.IdlNames {
-		s.Interfaces[name] = s.createInterface(spec)
+		switch spec.Type {
+		case "interface":
+			s.Interfaces[name] = s.createInterface(spec)
+		case "interface mixin":
+			s.InterfaceMixins[name] = InterfaceMixin{s.createInterface(spec)}
+		}
 	}
 }
 

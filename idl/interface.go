@@ -2,6 +2,21 @@ package idl
 
 import "iter"
 
+type BaseInterface struct {
+	Attributes []Attribute
+	Name       string
+	// Operations are the callable methods defined on the object. Note that the
+	// IDL spec allows for overloads, which is represented by multiple entries
+	// with the same name.
+	Operations []Operation
+	// Includes represent interfaces included using the includes IDL statement.
+	//
+	// See also: https://webidl.spec.whatwg.org/#includes-statement
+
+	// Don't rely on this, it only exists during a refactoring process
+	InternalSpec Name
+}
+
 // Interface represents an interface specification in the webref IDL files.
 //
 // For example, the following interface Animal is represented by an _interface_
@@ -11,21 +26,12 @@ import "iter"
 //		attribute DOMString name;
 //	};
 type Interface struct {
-	Attributes  []Attribute
+	BaseInterface
 	Inheritance string
-	Name        string
-	// Operations are the callable methods defined on the object. Note that the
-	// IDL spec allows for overloads, which is represented by multiple entries
-	// with the same name.
-	Operations []Operation
-	// Includes represent interfaces included using the includes IDL statement.
-	//
-	// See also: https://webidl.spec.whatwg.org/#includes-statement
-	Includes []Interface
-
-	// Don't rely on this, it only exists during a refactoring process
-	InternalSpec Name
+	Includes    []Interface
 }
+
+type InterfaceMixin struct{ Interface }
 
 // Represents an attribute on an IDL interface
 type Attribute struct {

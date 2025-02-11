@@ -57,6 +57,17 @@ func (s *IdlInterfacesTestSuite) TestNodeInheritsFromEventTarget() {
 	s.Assert().Equal("EventTarget", node.Inheritance)
 }
 
+func (s *IdlInterfacesTestSuite) TestHTMLHyperlinkElementUtilsIsAMixingButAnchorIsNot() {
+	_, anchorIsAnInterface := s.html.Interfaces["HTMLAnchorElement"]
+	_, anchorIsAMixin := s.html.InterfaceMixins["HTMLAnchorElement"]
+	s.Assert().True(anchorIsAnInterface, "Anchor is an interface")
+	s.Assert().False(anchorIsAMixin, "Anchor is a mixin")
+	_, hyperLinkUtilsIsAnInterface := s.html.Interfaces["HTMLHyperlinkElementUtils"]
+	_, hyperLinkUtilsIsAMixin := s.html.InterfaceMixins["HTMLHyperlinkElementUtils"]
+	s.Assert().False(hyperLinkUtilsIsAnInterface, "HyperlinkElementUtils is an interface")
+	s.Assert().True(hyperLinkUtilsIsAMixin, "HyperlinkElementUtils is a mixin")
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }
