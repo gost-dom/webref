@@ -1,8 +1,10 @@
 package idl_test
 
 import (
+	"slices"
 	"testing"
 
+	"github.com/gost-dom/webref/idl"
 	. "github.com/gost-dom/webref/idl"
 
 	"github.com/onsi/gomega"
@@ -63,6 +65,18 @@ func (s *IdlInterfacesTestSuite) TestHTMLHyperlinkElementUtilsIsAMixingButAnchor
 
 	hyperLinkUtilsIsAMixin := s.html.Interfaces["HTMLHyperlinkElementUtils"].Mixin
 	s.Assert().True(hyperLinkUtilsIsAMixin, "HyperlinkElementUtils is a mixin")
+}
+
+func (s *IdlInterfacesTestSuite) TestAttributeTypeOnHTMLCollection() {
+	intf := s.dom.Interfaces["HTMLCollection"]
+	idx := slices.IndexFunc(intf.Operations, func(o idl.Operation) bool { return o.Name == "item" })
+	s.Expect(idx).To(BeNumerically(">=", 0))
+	op := intf.Operations[idx]
+	s.Expect(op.Arguments[0].Type).To(Equal(idl.Type{
+		Name:     "unsigned long",
+		Nullable: false,
+	}))
+	s.Expect(op).ToNot(BeNil())
 }
 
 func TestExampleTestSuite(t *testing.T) {

@@ -78,7 +78,7 @@ func (s *Spec) createInterface(n Name) Interface {
 func createMethodArguments(n NameMember) []Argument {
 	result := make([]Argument, len(n.Arguments))
 	for i, a := range n.Arguments {
-		argType := a.IdlType.IdlType.Type
+		argType := a.IdlType.IdlType.IType.TypeName
 		nullable := a.IdlType.IdlType.Nullable
 		result[i] = Argument{
 			Name: a.Name,
