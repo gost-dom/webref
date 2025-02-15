@@ -24,6 +24,17 @@ type BaseInterface struct {
 	Mixin bool
 }
 
+// Gets the specifications for operation with the specified name. If nothing is
+// configured, default settings are returned.
+func (i BaseInterface) GetOperation(name string) Operation {
+	for _, o := range i.Operations {
+		if o.Name == name {
+			return o
+		}
+	}
+	return Operation{}
+}
+
 // Interface represents an interface specification in the webref IDL files.
 //
 // For example, the following interface Animal is represented by an _interface_

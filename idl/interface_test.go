@@ -1,7 +1,6 @@
 package idl_test
 
 import (
-	"slices"
 	"testing"
 
 	"github.com/gost-dom/webref/idl"
@@ -69,9 +68,7 @@ func (s *IdlInterfacesTestSuite) TestHTMLHyperlinkElementUtilsIsAMixingButAnchor
 
 func (s *IdlInterfacesTestSuite) TestAttributeTypeOnHTMLCollection() {
 	intf := s.dom.Interfaces["HTMLCollection"]
-	idx := slices.IndexFunc(intf.Operations, func(o idl.Operation) bool { return o.Name == "item" })
-	s.Expect(idx).To(BeNumerically(">=", 0))
-	op := intf.Operations[idx]
+	op := intf.GetOperation("item")
 	s.Expect(op.Arguments[0].Type).To(Equal(idl.Type{
 		Name:     "unsigned long",
 		Nullable: false,
