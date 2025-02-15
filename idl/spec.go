@@ -30,8 +30,7 @@ type Spec struct {
 	//
 	// This property will eventually be removed
 	ParsedIdlFile
-	Interfaces      map[string]Interface
-	InterfaceMixins map[string]InterfaceMixin
+	Interfaces map[string]Interface
 }
 
 func (s *Spec) createInterface(n Name) Interface {
@@ -46,6 +45,7 @@ func (s *Spec) createInterface(n Name) Interface {
 			Attributes:   make([]Attribute, len(jsonAttributes)),
 			Operations:   make([]Operation, len(jsonOperations)),
 			InternalSpec: n,
+			Mixin:        n.Type == "interface mixin",
 		},
 		Inheritance: n.Inheritance,
 		Includes:    make([]Interface, len(includedNames)),
@@ -92,13 +92,10 @@ func createMethodArguments(n NameMember) []Argument {
 // JSON data.
 func (s *Spec) initialize() {
 	s.Interfaces = make(map[string]Interface)
-	s.InterfaceMixins = make(map[string]InterfaceMixin)
 	for name, spec := range s.IdlNames {
 		switch spec.Type {
-		case "interface":
+		case "interface", "interface mixin":
 			s.Interfaces[name] = s.createInterface(spec)
-		case "interface mixin":
-			s.InterfaceMixins[name] = InterfaceMixin{s.createInterface(spec)}
 		}
 	}
 }
@@ -159,7 +156,9 @@ func (t *TypeSpec) InstanceMethods() iter.Seq[MemberSpec] {
 					slog.Warn("Function overloads", "Name", member.Name)
 					continue
 				} else {
-					yield(MemberSpec{member})
+					if !yield(MemberSpec{member}) {
+						return
+					}
 				}
 			}
 		}
@@ -170,7 +169,9 @@ func (t *TypeSpec) Attributes() iter.Seq[AttributeSpec] {
 	return func(yield func(v AttributeSpec) bool) {
 		for _, member := range t.IdlInterface.InternalSpec.Members {
 			if member.IsAttribute() {
-				yield(AttributeSpec{member})
+				if !yield(AttributeSpec{member}) {
+					return
+				}
 			}
 		}
 	}

@@ -15,6 +15,13 @@ type BaseInterface struct {
 
 	// Don't rely on this, it only exists during a refactoring process
 	InternalSpec Name
+	// Mixin tells if this is an [interface mixin]. A mixin doesn't result in a
+	// class by itself, but a collection of methods implemented by multiple
+	// classes. Eg., Node, Document, and DocumentFragment all serve as root nodes,
+	// but don't inherit that from a common base class.
+	//
+	// [interface mixin]: https://webidl.spec.whatwg.org/#idl-interface-mixins
+	Mixin bool
 }
 
 // Interface represents an interface specification in the webref IDL files.
@@ -30,8 +37,6 @@ type Interface struct {
 	Inheritance string
 	Includes    []Interface
 }
-
-type InterfaceMixin struct{ Interface }
 
 // Represents an attribute on an IDL interface
 type Attribute struct {
