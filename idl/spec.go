@@ -81,8 +81,9 @@ func createMethodArguments(n NameMember) []Argument {
 		argType := a.IdlType.IdlType.IType.TypeName
 		nullable := a.IdlType.IdlType.Nullable
 		result[i] = Argument{
-			Name: a.Name,
-			Type: Type{Name: argType, Nullable: nullable},
+			Name:     a.Name,
+			Type:     Type{Name: argType, Nullable: nullable},
+			Variadic: a.Variadic,
 		}
 	}
 	return result

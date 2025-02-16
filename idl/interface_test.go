@@ -76,6 +76,13 @@ func (s *IdlInterfacesTestSuite) TestAttributeTypeOnHTMLCollection() {
 	s.Expect(op).ToNot(BeNil())
 }
 
+func (s *IdlInterfacesTestSuite) TestParetNodeVeriadicArguments() {
+	intf := s.dom.Interfaces["ParentNode"]
+	op := intf.GetOperation("append")
+	s.Expect(op.Arguments[0].Variadic).To(BeTrue())
+
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }

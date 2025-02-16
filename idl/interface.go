@@ -69,8 +69,9 @@ type Operation struct {
 }
 
 type Argument struct {
-	Name string
-	Type Type
+	Name     string
+	Type     Type
+	Variadic bool
 }
 
 type Type struct {
