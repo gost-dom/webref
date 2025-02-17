@@ -4,6 +4,7 @@
 name: Build
 
 on:
+  workflow_call:
   push:
     branches: [ "main", "auto-merge", "goja", "move-project-to-gost" ]
   pull_request:
