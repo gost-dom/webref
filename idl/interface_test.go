@@ -8,6 +8,7 @@ import (
 
 	"github.com/onsi/gomega"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega/types"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -68,7 +69,8 @@ func (s *IdlInterfacesTestSuite) TestHTMLHyperlinkElementUtilsIsAMixingButAnchor
 
 func (s *IdlInterfacesTestSuite) TestAttributeTypeOnHTMLCollection() {
 	intf := s.dom.Interfaces["HTMLCollection"]
-	op := intf.GetOperation("item")
+	op, found := intf.GetOperation("item")
+	s.True(found)
 	s.Expect(op.Arguments[0].Type).To(Equal(idl.Type{
 		Name:     "unsigned long",
 		Nullable: false,
@@ -78,13 +80,49 @@ func (s *IdlInterfacesTestSuite) TestAttributeTypeOnHTMLCollection() {
 
 func (s *IdlInterfacesTestSuite) TestParetNodeVeriadicArguments() {
 	intf := s.dom.Interfaces["ParentNode"]
-	op := intf.GetOperation("append")
+	op, found := intf.GetOperation("append")
+	s.True(found)
 	s.Expect(op.Arguments[0].Variadic).To(BeTrue())
 
-	op = intf.GetOperation("querySelector")
+	op, found = intf.GetOperation("querySelector")
+	s.True(found)
 	s.Expect(op.Arguments[0].Variadic).To(BeFalse())
+}
+
+func (s *IdlInterfacesTestSuite) TestUrlHasStringifierOnHref() {
+	assert := s.Assert()
+	intf := s.url.Interfaces["URL"]
+
+	attr, found := intf.GetAttribute("href")
+	assert.True(found)
+	assert.True(attr.Stringifier, "URL.href is a stringifier")
+
+	attr, found = intf.GetAttribute("host")
+	assert.True(found)
+	assert.False(attr.Stringifier, "URL.host is a stringifier")
+}
+
+func (s *IdlInterfacesTestSuite) TestUrlSearchParamsHasStringifierOnEmptyFunction() {
+	assert := s.Assert()
+
+	intf, found := s.url.Interfaces["URLSearchParams"]
+	assert.True(found)
+
+	attr, found := intf.GetOperation("")
+	assert.True(found)
+	assert.True(attr.Stringifier, "URLSearchParams has a toString()")
+
+	attr, found = intf.GetOperation("append")
+	assert.True(found)
+	assert.False(attr.Stringifier, "URL.appand is a stringifier")
 }
 
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
+}
+
+func BeAStringifier() types.GomegaMatcher {
+	return WithTransform(
+		func(a Attribute) bool { return a.Stringifier },
+		BeTrue())
 }

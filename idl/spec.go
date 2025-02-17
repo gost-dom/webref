@@ -33,6 +33,14 @@ type Spec struct {
 	Interfaces map[string]Interface
 }
 
+func createInterfaceMember(m NameMember) InterfaceMember {
+	return InterfaceMember{
+		InternalSpec: m,
+		Name:         m.Name,
+		Stringifier:  m.Special == "stringifier",
+	}
+}
+
 func (s *Spec) createInterface(n Name) Interface {
 	includedNames := s.IdlExtendedNames[n.Name].includes()
 
@@ -56,20 +64,18 @@ func (s *Spec) createInterface(n Name) Interface {
 	for i, a := range jsonAttributes {
 		name, nullable := FindMemberAttributeType(a)
 		intf.Attributes[i] = Attribute{
-			InternalSpec: a,
-			Name:         a.Name,
-			Type:         Type{Name: name, Nullable: nullable},
-			Readonly:     a.Readonly,
+			InterfaceMember: createInterfaceMember(a),
+			Type:            Type{Name: name, Nullable: nullable},
+			Readonly:        a.Readonly,
 		}
 	}
 	for i, a := range jsonOperations {
 		typeName, nullable := FindMemberReturnType(a)
 		intf.Operations[i] = Operation{
-			Name:         a.Name,
-			ReturnType:   Type{Name: typeName, Nullable: nullable},
-			Arguments:    createMethodArguments(a),
-			Static:       a.Special == "static",
-			InternalSpec: a,
+			InterfaceMember: createInterfaceMember(a),
+			ReturnType:      Type{Name: typeName, Nullable: nullable},
+			Arguments:       createMethodArguments(a),
+			Static:          a.Special == "static",
 		}
 	}
 	return intf

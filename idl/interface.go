@@ -1,6 +1,9 @@
 package idl
 
-import "iter"
+import (
+	"fmt"
+	"iter"
+)
 
 type BaseInterface struct {
 	Attributes []Attribute
@@ -26,13 +29,26 @@ type BaseInterface struct {
 
 // Gets the specifications for operation with the specified name. If nothing is
 // configured, default settings are returned.
-func (i BaseInterface) GetOperation(name string) Operation {
+func (i BaseInterface) GetOperation(name string) (Operation, bool) {
 	for _, o := range i.Operations {
 		if o.Name == name {
-			return o
+			return o, true
 		}
 	}
-	return Operation{}
+	return Operation{}, false
+}
+
+// Gets the specifications for operation with the specified name. If nothing is
+// configured, default settings are returned.
+func (i BaseInterface) GetAttribute(name string) (a Attribute, found bool) {
+	for _, a := range i.Attributes {
+		fmt.Println("Testing", a.Name)
+		if a.Name == name {
+			fmt.Println("Returning")
+			return a, true
+		}
+	}
+	return Attribute{}, false
 }
 
 // Interface represents an interface specification in the webref IDL files.
@@ -49,23 +65,30 @@ type Interface struct {
 	Includes    []Interface
 }
 
-// Represents an attribute on an IDL interface
-type Attribute struct {
+type InterfaceMember struct {
 	// Don't rely on this, it only exists during a refactoring process
 	InternalSpec NameMember
 	Name         string
-	Type         Type
-	Readonly     bool
+	// If a member is a stringifier, this means that this member is to be used
+	// when a string representation is created of an object. Only one member can
+	// be a stringifier. For an operation, an empty name means that it must be
+	// called toString() in JavaScript
+	Stringifier bool
+}
+
+// Represents an attribute on an IDL interface
+type Attribute struct {
+	InterfaceMember
+	Type     Type
+	Readonly bool
 }
 
 // Represents a method on an IDL interface
 type Operation struct {
-	Name       string
+	InterfaceMember
 	ReturnType Type
 	Arguments  []Argument
 	Static     bool
-	// Don't rely on this, it only exists during a refactoring process
-	InternalSpec NameMember
 }
 
 type Argument struct {
