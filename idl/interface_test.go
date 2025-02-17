@@ -81,6 +81,8 @@ func (s *IdlInterfacesTestSuite) TestParetNodeVeriadicArguments() {
 	op := intf.GetOperation("append")
 	s.Expect(op.Arguments[0].Variadic).To(BeTrue())
 
+	op = intf.GetOperation("querySelector")
+	s.Expect(op.Arguments[0].Variadic).To(BeFalse())
 }
 
 func TestExampleTestSuite(t *testing.T) {
