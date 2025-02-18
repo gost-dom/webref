@@ -1,4 +1,4 @@
-// Package idl contains data types representing the information present in the
-// webspec IDL files, including functions that can help cross-references
-// information.
+// Package idl is part of the gost-dom project and contains data types representing web IDL specifications.
+//
+// Use function [Load] to load a spec
 package idl

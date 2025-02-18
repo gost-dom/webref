@@ -21,6 +21,13 @@ func NewRetTypeUndefined() RetType { return RetType{TypeName: "undefined", Nulla
 
 // Spec represents the information stored in Web IDL files.
 type Spec struct {
+
+	// Interfaces is a map of the exported IDL interface name to it's
+	// specification. The name correspond to the JavaScript class, e.g., for the
+	// "dom" spec, interface names are "Node", "Element", etc.
+	Interfaces map[string]Interface
+	// Deprecated: Avoid using this value.
+	//
 	// ParsedIdlFile is a direct JSON deserialisation of the data.
 	//
 	// Note: This was the first implementation and is most complete in terms of
@@ -30,7 +37,6 @@ type Spec struct {
 	//
 	// This property will eventually be removed
 	ParsedIdlFile
-	Interfaces map[string]Interface
 }
 
 func createInterfaceMember(m NameMember) InterfaceMember {
@@ -109,6 +115,9 @@ func (s *Spec) initialize() {
 
 // Load loads a files from the /curated/idlpased directory containing
 // specifications of the interfaces.
+//
+// Parameter name indicates the web spec name, to load specs from "dom.idl",
+// pass the name, "dom".
 func Load(name string) (Spec, error) {
 	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", name))
 	if err != nil {

@@ -1,6 +1,14 @@
-// Package elements contains functionality to tell which HTML tags correspond to
-// which IDL interface names. E.g., the <a> tag corresponds to the
-// HTMLAnchorElement IDL interface specification.
+// Package elements is part of the gost-dom project and contains html element type lookup.
+//
+// Load a specification using function [Load].
+//
+// When a browser loads the following HTML.
+//
+//	<a href="/example">An example</a>
+//
+// The element will be represented by the HTMLAnchorElement IDL interface. This
+// package contains the mapping from the tag name, "a", to the IDL interface
+// name, "HTMLAnchorElement" for all HTML elements.
 package elements
 
 import (
@@ -47,6 +55,11 @@ func (n Elements) GetTagNameForInterfaceError(i string) (res string, err error) 
 	return
 }
 
+// Load loads a files from the /curated/idlpased directory containing
+// specifications of the interfaces.
+//
+// Parameter name indicates the web spec name, to load specs from "dom.idl",
+// pass the name, "dom".
 func Load(name string) (res Elements, err error) {
 	var (
 		b []byte

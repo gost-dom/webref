@@ -2,7 +2,12 @@
 
 This library exposes data from Web IDL specifications as Go types.
 
-Data is sourced from [github.com/w3c/webref](https://github.com/w3c/webref)
+Data is sourced from [github.com/w3c/webref](https://github.com/w3c/webref). The
+data in the release package contains data from the _curated_ list, i.e. types
+that have reached a level of maturity, and can assumed to be supported by major
+browsers.
+
+Please reach out if you are interested in the bleeding edge specs.
 
 > [!IMPORTANT]
 >
@@ -15,7 +20,7 @@ Data is sourced from [github.com/w3c/webref](https://github.com/w3c/webref)
 This is not a complete representation of all data, but strives to be the place
 to look.
 
-Features are added as 
+Features are added as necessary from gost-dom, or user feedback.
 
 ## Packages
 
