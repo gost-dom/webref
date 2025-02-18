@@ -2,6 +2,11 @@ module github.com/gost-dom/webref
 
 go 1.23.4
 
+retract (
+	v1.0.1 // Contains retractions only.
+	v1.0.0 // Published accidentally.
+)
+
 require (
 	github.com/onsi/gomega v1.36.2
 	github.com/stretchr/testify v1.10.0
