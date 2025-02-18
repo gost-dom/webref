@@ -4,7 +4,7 @@ go 1.23.4
 
 retract (
 	v1.0.1 // Contains retractions only.
-	v1.0.0 // Published accidentally.
+	v1.0.0 // Published accidentally. This is identical to 0.1.0
 )
 
 require (
