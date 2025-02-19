@@ -132,6 +132,18 @@ func (s *IdlInterfacesTestSuite) TestSequenceReturnValue() {
 	assert.Equal("USVString", getAll.ReturnType.TypeParam.Name)
 }
 
+func (s *IdlInterfacesTestSuite) TestOptionalArgs() {
+	assert := s.Assert()
+
+	intf, found := s.url.Interfaces["URLSearchParams"]
+	assert.True(found)
+
+	op, found := intf.GetOperation("has")
+	s.Assert().True(found)
+	s.Assert().False(op.Arguments[0].Optional, "URLSearchParams.has - first argument optional")
+	s.Assert().True(op.Arguments[1].Optional, "URLSearchParams.has - second argument optional")
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }

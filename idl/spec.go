@@ -114,6 +114,7 @@ func createMethodArguments(n NameMember) []Argument {
 			Name:     a.Name,
 			Type:     Type{Name: argType, Nullable: nullable},
 			Variadic: a.Variadic,
+			Optional: a.Optional,
 		}
 	}
 	return result

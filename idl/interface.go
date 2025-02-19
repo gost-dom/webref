@@ -120,6 +120,7 @@ type Argument struct {
 	Name     string
 	Type     Type
 	Variadic bool
+	Optional bool
 }
 
 // // NOTE: This will be removed in favour of a slice on the type
