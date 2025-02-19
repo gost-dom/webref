@@ -55,17 +55,18 @@ func (n Elements) GetTagNameForInterfaceError(i string) (res string, err error) 
 	return
 }
 
-// Load loads a files from the /curated/idlpased directory containing
-// specifications of the interfaces.
+// Load loads the sources for a specific standard. The names correspond to the
+// files in the [ed/elements] folder in the curated branch of the [webref]
+// repository
 //
-// Parameter name indicates the web spec name, to load specs from "dom.idl",
-// pass the name, "dom".
-func Load(name string) (res Elements, err error) {
+// [ed/elements]: https://github.com/w3c/webref/tree/curated/ed/elements
+// [webref]: https://github.com/w3c/webref
+func Load(standard string) (res Elements, err error) {
 	var (
 		b []byte
 		r io.Reader
 	)
-	if r, err = specs.Open(fmt.Sprintf("elements/%s.json", name)); err == nil {
+	if r, err = specs.Open(fmt.Sprintf("elements/%s.json", standard)); err == nil {
 		if b, err = io.ReadAll(r); err == nil {
 			err = json.Unmarshal(b, &res)
 		}

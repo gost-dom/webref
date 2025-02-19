@@ -132,10 +132,14 @@ func (s *Spec) initialize() {
 	}
 }
 
-// Load loads a files from the /curated/idlpased directory containing
-// specifications of the interfaces.
-func Load(name string) (Spec, error) {
-	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", name))
+// Load loads the IDL specs for a specific web API. The names correspond to the
+// files in the [ed/idlparsed] folder in the curated branch of the
+// [webref] repository.
+//
+// [ed/idlparsed]: https://github.com/w3c/webref/tree/curated/ed/idlparsed
+// [webref]: https://github.com/w3c/webref
+func Load(apiName string) (Spec, error) {
+	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", apiName))
 	if err != nil {
 		return Spec{}, err
 	}
