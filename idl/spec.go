@@ -21,13 +21,6 @@ func NewRetTypeUndefined() RetType { return RetType{TypeName: "undefined", Nulla
 
 // Spec represents the information stored in Web IDL files.
 type Spec struct {
-
-	// Interfaces is a map of the exported IDL interface name to it's
-	// specification. The name correspond to the JavaScript class, e.g., for the
-	// "dom" spec, interface names are "Node", "Element", etc.
-	Interfaces map[string]Interface
-	// Deprecated: Avoid using this value.
-	//
 	// ParsedIdlFile is a direct JSON deserialisation of the data.
 	//
 	// Note: This was the first implementation and is most complete in terms of
@@ -37,6 +30,7 @@ type Spec struct {
 	//
 	// This property will eventually be removed
 	ParsedIdlFile
+	Interfaces map[string]Interface
 }
 
 func createInterfaceMember(m NameMember) InterfaceMember {
@@ -76,15 +70,39 @@ func (s *Spec) createInterface(n Name) Interface {
 		}
 	}
 	for i, a := range jsonOperations {
-		typeName, nullable := FindMemberReturnType(a)
 		intf.Operations[i] = Operation{
 			InterfaceMember: createInterfaceMember(a),
-			ReturnType:      Type{Name: typeName, Nullable: nullable},
+			ReturnType:      getReturnType(a),
 			Arguments:       createMethodArguments(a),
 			Static:          a.Special == "static",
 		}
 	}
 	return intf
+}
+
+func getReturnType(operation NameMember) Type {
+	if t, ok := FindIdlTypeValue(operation.IdlType, "return-type"); ok {
+		return convertType(t)
+	}
+	return Type{}
+}
+
+func convertType(t IdlType) Type {
+	if t.Generic == "sequence" {
+		return convertSequence(t)
+	}
+	return Type{Name: t.IType.TypeName, Nullable: t.Nullable}
+}
+
+func convertSequence(t IdlType) Type {
+	innerIdl, _ := FindIdlTypeValue(t.IType, "return-type")
+	inner := convertType(innerIdl)
+	return Type{
+		Kind:      KindSequence,
+		Name:      t.IType.TypeName,
+		Nullable:  t.Nullable,
+		TypeParam: &inner,
+	}
 }
 
 func createMethodArguments(n NameMember) []Argument {
@@ -115,9 +133,6 @@ func (s *Spec) initialize() {
 
 // Load loads a files from the /curated/idlpased directory containing
 // specifications of the interfaces.
-//
-// Parameter name indicates the web spec name, to load specs from "dom.idl",
-// pass the name, "dom".
 func Load(name string) (Spec, error) {
 	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", name))
 	if err != nil {

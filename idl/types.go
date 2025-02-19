@@ -115,6 +115,8 @@ type NameMember struct {
 	Href      string         `json:"href"`
 }
 
+// This type should be avoided, but may contain information missing on
+// [Interface].
 type Name struct {
 	Type        string       `json:"type"`
 	Name        string       `json:"name"`
@@ -148,6 +150,8 @@ func (n Name) Operations() iter.Seq[NameMember] {
 	}
 }
 
+// This type should be avoided, but may contain information missing on
+// [Interface].
 type ExtendedName struct {
 	Fragment string
 	Type     string
@@ -156,6 +160,8 @@ type ExtendedName struct {
 	Includes string
 }
 
+// This type should be avoided, but may contain information missing on
+// [Interface].
 type ExtendedNames []ExtendedName
 
 func (nn ExtendedNames) includes() []string {
@@ -168,11 +174,15 @@ func (nn ExtendedNames) includes() []string {
 	return res
 }
 
+// This type should be avoided, but may contain information missing on
+// [Interface].
 type Parsed struct {
 	IdlNames         map[string]Name
 	IdlExtendedNames map[string]ExtendedNames
 }
 
+// This type should be avoided, but may contain information missing on
+// [Interface].
 type ParsedIdlFile struct {
 	Parsed `json:"idlParsed"`
 }

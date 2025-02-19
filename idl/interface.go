@@ -5,6 +5,31 @@ import (
 	"iter"
 )
 
+type TypeKind int
+
+const (
+	// KindSimple represents most distinguishable types, but not "generic"
+	// types, such as sequences
+	KindSimple TypeKind = iota
+	// The type is specified as a sequence<...>.
+	//
+	// When the kind is a sequence, the value is present on the TypeParam field.
+	KindSequence
+)
+
+// Represents an [IDL type]
+//
+// [IDL type]: https://webidl.spec.whatwg.org/#idl-types
+type Type struct {
+	// Type name. This is a simplification so far.
+	Kind     TypeKind
+	Name     string
+	Nullable bool
+	// TypeParam contains the type parameter for generic types, e.g.
+	// sequence<...>
+	TypeParam *Type
+}
+
 type BaseInterface struct {
 	Attributes []Attribute
 	Name       string
@@ -95,12 +120,6 @@ type Argument struct {
 	Name     string
 	Type     Type
 	Variadic bool
-}
-
-type Type struct {
-	// Type name. This is a simplification so far.
-	Name     string
-	Nullable bool
 }
 
 // // NOTE: This will be removed in favour of a slice on the type

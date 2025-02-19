@@ -117,6 +117,21 @@ func (s *IdlInterfacesTestSuite) TestUrlSearchParamsHasStringifierOnEmptyFunctio
 	assert.False(attr.Stringifier, "URL.appand is a stringifier")
 }
 
+func (s *IdlInterfacesTestSuite) TestSequenceReturnValue() {
+	assert := s.Assert()
+
+	intf, found := s.url.Interfaces["URLSearchParams"]
+	assert.True(found)
+
+	get, found := intf.GetOperation("get")
+	assert.Equal(KindSimple, get.ReturnType.Kind)
+	assert.Equal("USVString", get.ReturnType.Name)
+
+	getAll, found := intf.GetOperation("getAll")
+	assert.Equal(KindSequence, getAll.ReturnType.Kind, "getAll is a sequence")
+	assert.Equal("USVString", getAll.ReturnType.TypeParam.Name)
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }
