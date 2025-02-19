@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: ["release"]
+    branches: ["disabled/release"]
 
 jobs:
   release-prebuild:
