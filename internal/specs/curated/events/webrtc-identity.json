@@ -1,0 +1,1 @@
+{"spec":{"title":"Identity for WebRTC 1.0","url":"https://w3c.github.io/webrtc-identity/"},"events":[{"src":{"format":"summary table"},"type":"isolationchange","targets":["MediaStreamTrack"],"interface":"Event"}]}

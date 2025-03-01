@@ -1,0 +1,1 @@
+{"spec":{"title":"Push API","url":"https://w3c.github.io/push-api/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"push","targets":["ServiceWorkerGlobalScope"],"interface":"PushEvent"},{"src":{"format":"fire an event phrasing"},"type":"pushsubscriptionchange","targets":["ServiceWorkerGlobalScope"],"interface":"PushSubscriptionChangeEvent"}]}

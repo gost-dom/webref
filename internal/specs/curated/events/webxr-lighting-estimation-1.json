@@ -1,0 +1,1 @@
+{"spec":{"title":"WebXR Lighting Estimation API Level 1","url":"https://immersive-web.github.io/lighting-estimation/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"reflectionchange","targets":["XRLightProbe"],"interface":"Event"}]}

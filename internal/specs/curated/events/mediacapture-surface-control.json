@@ -1,0 +1,1 @@
+{"spec":{"title":"Captured Surface Control","url":"https://w3c.github.io/mediacapture-surface-control/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"zoomlevelchange","targets":["CaptureController"],"interface":"Event"}]}

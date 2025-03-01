@@ -1,0 +1,1 @@
+{"spec":{"title":"DOM Standard","url":"https://dom.spec.whatwg.org/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"abort","targets":["AbortSignal"],"interface":"Event"},{"src":{"format":"fire an event phrasing"},"type":"slotchange","targets":["HTMLSlotElement"],"interface":"Event","bubbles":true}]}

@@ -1,0 +1,1 @@
+{"spec":{"title":"Pointer Lock 2.0","url":"https://w3c.github.io/pointerlock/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"pointerlockchange","targets":["Document"],"interface":"Event","bubbles":false},{"src":{"format":"fire an event phrasing"},"type":"pointerlockerror","targets":["Document"],"interface":"Event","bubbles":false}]}

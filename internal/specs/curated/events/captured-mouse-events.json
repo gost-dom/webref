@@ -1,0 +1,1 @@
+{"spec":{"title":"Captured Mouse Events","url":"https://screen-share.github.io/captured-mouse-events/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"capturedmousechange","targets":["CaptureController"],"interface":"CapturedMouseEvent","bubbles":false,"cancelable":false}]}

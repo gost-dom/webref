@@ -1,0 +1,1 @@
+{"spec":{"title":"Web MIDI API","url":"https://webaudio.github.io/web-midi-api/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"statechange","targets":["MIDIPort","MIDIAccess"],"interface":"MIDIConnectionEvent"},{"src":{"format":"fire an event phrasing"},"type":"midimessage","interface":"MIDIMessageEvent","targets":["MIDIInput"]}]}

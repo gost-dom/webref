@@ -1,0 +1,1 @@
+{"spec":{"title":"Compatibility Standard","url":"https://compat.spec.whatwg.org/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"orientationchange","targets":["Window"],"interface":"Event"}]}

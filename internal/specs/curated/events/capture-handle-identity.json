@@ -1,0 +1,1 @@
+{"spec":{"title":"Capture Handle - Bootstrapping Collaboration when Screensharing","url":"https://w3c.github.io/mediacapture-handle/identity/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"capturehandlechange","targets":["MediaStreamTrack"],"interface":"Event"}]}

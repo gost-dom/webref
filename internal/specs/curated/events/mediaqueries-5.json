@@ -1,0 +1,1 @@
+{"spec":{"title":"Media Queries Level 5","url":"https://drafts.csswg.org/mediaqueries-5/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"change","targets":["PreferenceObject"],"interface":"Event"}]}

@@ -1,0 +1,1 @@
+{"spec":{"title":"WebXR DOM Overlays Module","url":"https://immersive-web.github.io/dom-overlays/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"beforexrselect","targets":["GlobalEventHandlers"],"interface":"XRSessionEvent","bubbles":true,"cancelable":true}]}

@@ -1,0 +1,1 @@
+{"spec":{"title":"Device Posture API","url":"https://w3c.github.io/device-posture/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"change","targets":["DevicePosture"],"interface":"Event"}]}

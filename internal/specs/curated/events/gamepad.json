@@ -1,0 +1,1 @@
+{"spec":{"title":"Gamepad","url":"https://w3c.github.io/gamepad/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"gamepadconnected","targets":["WindowEventHandlers"],"interface":"GamepadEvent"},{"src":{"format":"fire an event phrasing"},"type":"gamepaddisconnected","targets":["WindowEventHandlers"],"interface":"GamepadEvent"}]}

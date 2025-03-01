@@ -1,0 +1,1 @@
+{"spec":{"title":"Cookie Store API","url":"https://wicg.github.io/cookie-store/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"cookiechange","targets":["ServiceWorkerGlobalScope"],"interface":"ExtendableCookieChangeEvent"},{"type":"change","targets":["CookieStore"],"src":{"format":"IDL eventHandler"},"interface":"CookieChangeEvent"}]}

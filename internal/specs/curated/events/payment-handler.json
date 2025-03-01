@@ -1,0 +1,1 @@
+{"spec":{"title":"Payment Handler API","url":"https://w3c.github.io/payment-handler/"},"events":[{"src":{"format":"fire an event phrasing"},"type":"canmakepayment","targets":["ServiceWorkerGlobalScope"],"interface":"CanMakePaymentEvent"},{"src":{"format":"fire an event phrasing"},"type":"paymentrequest","targets":["ServiceWorkerGlobalScope"],"interface":"PaymentRequestEvent"}]}

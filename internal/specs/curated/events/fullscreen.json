@@ -1,0 +1,1 @@
+{"spec":{"title":"Fullscreen API Standard","url":"https://fullscreen.spec.whatwg.org/"},"events":[{"type":"fullscreenchange","targets":["Document","Element"],"src":{"format":"dfn"},"bubbles":true,"interface":"Event"},{"type":"fullscreenerror","targets":["Document","Element"],"src":{"format":"dfn"},"bubbles":true,"interface":"Event"}]}
