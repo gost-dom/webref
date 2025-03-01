@@ -6,31 +6,25 @@ test:
 watch:
 	gow -s -S "Build done" build
 
-
-.PHONY: watch
-build-webref:
-	# git submodule update --init
-	# cd specs/sources && npm i
-	# cd specs/sources && npm run curate
-	cp specs/sources/curated/idlparsed/* specs/curated/idlparsed
-	cp specs/sources/curated/elements/* specs/curated/elements
-
-ED_DIR := specs/sources/ed
+SOURCES_DIR := internal/specs/sources/ed
+ED_DIR := $(SOURCES_DIR)
 IDL_DIR := $(ED_DIR)/idlparsed
-ELEMENTS_DIR := $(ELEMENTS_DIR)/elements
-OUTPUT_DIR := specs/curated
+ELEMENTS_DIR := $(ED_DIR)/elements
+OUTPUT_DIR := internal/specs/curated
 
-# Pattern to match all JSON files
-JSON_FILES := $(wildcard $(IDL_DIR)/*.json)
+# If you add a new folder to build, include it here.
+SOURCE_JSON_FILES := $(wildcard $(IDL_DIR)/*.json) $(wildcard $(ELEMENTS_DIR)/*.json)
+
 
 # The jq transformation command
 JQ_CMD := jq -c 'del(.. | .fragment? // empty, .href? // empty)'
 
-# Default target
-all: $(JSON_FILES:$(ED_DIR)/%=$(OUTPUT_DIR)/%)
+TARGET_JSON_FILES := $(SOURCE_JSON_FILES:$(ED_DIR)/%=$(OUTPUT_DIR)/%)
+
+specs: $(TARGET_JSON_FILES)
 
 diag:
-	echo $(JSON_FILES:$(ED_DIR)/%=$(OUTPUT_DIR)/%)
+	echo $(TARGET_JSON_FILES)
 
 # Rule to process each JSON file
 $(OUTPUT_DIR)/%.json: $(ED_DIR)/%.json

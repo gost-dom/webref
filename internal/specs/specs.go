@@ -6,8 +6,7 @@ import (
 	"path"
 )
 
-//go:embed curated/idlparsed/*.json
-//go:embed curated/elements/*.json
+//go:embed curated/**/*.json
 var WebRef embed.FS
 
 func Open(name string) (fs.File, error) {

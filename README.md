@@ -81,6 +81,44 @@ however.
 Eventually, the old model will be removed (or unexported), leaving only the new
 model.
 
+## How data is sourced
+
+The folder `internal/specs/sources` is a git submodule pointing to the
+[curated](https://github.com/w3c/webref/tree/curated) list of webref files.
+
+A make target copies the used files to `internal/specs/processed`, and processes
+them for smaller footprint, removing whitespace and unused attributes
+
+### Updating sources
+
+To update the sources, you must get the submodule, update to the latest branch,
+and rerun the make script
+
+If you didn't already, get the submodule `git submodule update --init`
+
+If you already had the data, from the `internal/specs/sources` folder run
+
+```sh
+git fetch # if you have previously retrieved the data, get latest)
+git checkout origin/curated
+```
+
+From the root of the project, run (note, this requires a unix-like shell)
+
+```
+make specs
+```
+
+Run the test suite, and commit the changes if successful, including the
+`internal/specs/sources` containing the new commit hash.
+
+### Including more types
+
+If you need to add support for more "folders" in the sources, you need to:
+- Add this to the list of processed folders in the Makefiles. Check comments for how
+- Create the output folder, the target fails if the folder doesn't exist.
+- Run the `specs` make target
+
 ## About the compiled file size
 
 The compiled library takes up about 6Mb on disk, which is mainly embedded data
