@@ -28,6 +28,7 @@ This package is divided into subpackages:
 
 - `elements` contains mapping from HTML element tag names to IDL interface name.
 - `idl` contains the Web IDL specifications.
+- `events` information about the different event types being dispatched.
 
 ### Package `elements`
 
@@ -57,6 +58,11 @@ for _, o := anchor.Operations {
   // ...
 }
 ```
+
+### Package `events`
+
+A click event bubbles and is cancelable. A formdata also bubbles, but isn't
+cancelable. That is the type of information present in the `events` package.
 
 ## Coding guidelines
 
@@ -117,7 +123,7 @@ Run the test suite, and commit the changes if successful, including the
 If you need to add support for more "folders" in the sources, you need to:
 - Add this to the list of processed folders in the Makefiles. Check comments for how
 - Create the output folder, the target fails if the folder doesn't exist.
-- Run the `specs` make target
+- Run the `specs` make target.
 
 ## About the compiled file size
 
