@@ -1,6 +1,17 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.0](https://github.com/gost-dom/webref/compare/v0.4.0...v0.5.0) (2025-03-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Move the legacy JSON decoded types to a `legacy`
+subpackage for easy identifaction of APIs to avoid unless it's the only
+source of that information. See readme file for more information.
+
+* Move legacy idl data to `legacy` sub package. ([649e529](https://github.com/gost-dom/webref/commit/649e529e4bf965e2d604979cebae526158c9a5ba))
+
 ## [0.4.0](https://github.com/gost-dom/webref/compare/v0.3.1...v0.4.0) (2025-03-02)
 
 
