@@ -15,7 +15,7 @@ func TestElementEvents(t *testing.T) {
 	expect(result).To(gomega.ContainElement(events.Event{
 		Type:      "click",
 		Interface: "PointerEvent",
-		Properties: map[string]bool{
+		Options: map[events.EventOption]bool{
 			"bubbles":    true,
 			"cancelable": true,
 		},

@@ -3,6 +3,7 @@ module github.com/gost-dom/webref
 go 1.23.4
 
 retract (
+	v0.3.1 // Was published a little hastily with poor naming. Skip this and jump to 0.4
 	v1.0.1 // Contains retractions only.
 	v1.0.0 // Published accidentally. This is identical to 0.1.0
 )
