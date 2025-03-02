@@ -92,7 +92,7 @@ model.
 The folder `internal/specs/sources` is a git submodule pointing to the
 [curated](https://github.com/w3c/webref/tree/curated) list of webref files.
 
-A make target copies the used files to `internal/specs/processed`, and processes
+A make target copies the used files to `internal/specs/curated`, and processes
 them for smaller footprint, removing whitespace and unused attributes
 
 ### Updating sources
