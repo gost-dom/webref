@@ -1,8 +1,24 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.4.0](https://github.com/gost-dom/webref/compare/v0.3.1...v0.4.0) (2025-03-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* This is a breaking change for v0.3.1, but not v0.3.0 -
+as 0.3.1 introduced the new type but with poor names that is improved in
+v0.4.0.
+
+### Features
+
+* Fix poorly named exported fields and types ([d20d877](https://github.com/gost-dom/webref/commit/d20d877adfba6089a9689e0f37dcb01d5f56f54a))
+
 ## [0.3.1](https://github.com/gost-dom/webref/compare/v0.3.0...v0.3.1) (2025-03-02)
 
+> [!WARNING]
+>
+> Avoid this version, it has poorly named fields, that are improved in v0.4.0
 
 ### Features
 
