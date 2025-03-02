@@ -3,6 +3,8 @@ package idl
 import (
 	"fmt"
 	"iter"
+
+	. "github.com/gost-dom/webref/idl/legacy"
 )
 
 type TypeKind int
@@ -122,11 +124,6 @@ type Argument struct {
 	Variadic bool
 	Optional bool
 }
-
-// // NOTE: This will be removed in favour of a slice on the type
-// func (i Interface) Attributes() iter.Seq[NameMember] {
-// 	return i.InternalSpec.Attributes()
-// }
 
 // Attributes iterates and return all attributes from the IDO interface i. If
 // included is true, this will also iterate attributes from interfaces that i

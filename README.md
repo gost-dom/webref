@@ -59,6 +59,26 @@ for _, o := anchor.Operations {
 }
 ```
 
+#### Legacy data structures
+
+The first version of `idl` module consisted was a "reverse engineering" of the
+JSON data. This data _should_ be contain all information in the source data. But
+this exposes a less useful model.
+
+A new interface was starter, better representing the Web IDL itself, using terms
+like `Interface` instead of `Name` for types representing an interface
+specification.
+
+The new data model is not completed, i.e., not all source data is exposed. As a
+solution to missing information, the data has references to the the legacy
+objects representing the same data.
+
+The legacy model is in the `idl/legacy` subpackage, and should not be used
+unless the information is not present in the `idl` package itself.
+
+If you depend on this information, please submit an issue, or even better, file
+a PR, 
+
 ### Package `events`
 
 A click event bubbles and is cancelable. A formdata also bubbles, but isn't
@@ -71,21 +91,10 @@ values, and comparing them against expectations. E.g., the `URL` interface from
 the `url` specification should have a non-static `toJSON` operation, and a
 static `parse` operation.
 
-When a new feature is supported, add a test for a type that uses the feature,
-showing.
-
-### Historic code
-
-The first version of the code for the idl module consisted of structures
-"reverse engineered" from the JSON data, not knowing exactly what they
-represented. This data _should_ be complete, but exposes a less useful model.
-
-Later, I started reading the specs for Web IDL itself, and started a new set of
-types that has a model reflecting the standard itself. This is not complete
-however.
-
-Eventually, the old model will be removed (or unexported), leaving only the new
-model.
+When support is added for a new type of information, new tests should be added
+verifying the information on _real types in the IDL specification_, both
+positive and negative tests, i.e., add tests for types that don't have this type
+of information.
 
 ## How data is sourced
 

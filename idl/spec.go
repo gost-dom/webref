@@ -9,6 +9,7 @@ import (
 	"slices"
 	"strings"
 
+	. "github.com/gost-dom/webref/idl/legacy"
 	"github.com/gost-dom/webref/internal/specs"
 )
 
@@ -42,7 +43,7 @@ func createInterfaceMember(m NameMember) InterfaceMember {
 }
 
 func (s *Spec) createInterface(n Name) Interface {
-	includedNames := s.IdlExtendedNames[n.Name].includes()
+	includedNames := s.IdlExtendedNames[n.Name].Includes()
 
 	jsonAttributes := slices.Collect(n.Attributes())
 	jsonOperations := slices.Collect(n.Operations())
