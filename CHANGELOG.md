@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.1](https://github.com/gost-dom/webref/compare/v0.5.0...v0.5.1) (2025-03-02)
+
+
+### Bug Fixes
+
+* Remove Print statement ([c7a66b2](https://github.com/gost-dom/webref/commit/c7a66b2289ec6b19e70188a5b907e30ebc69386c))
+
 ## [0.5.0](https://github.com/gost-dom/webref/compare/v0.4.0...v0.5.0) (2025-03-02)
 
 
