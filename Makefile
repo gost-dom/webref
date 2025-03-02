@@ -1,6 +1,13 @@
-.PHONY: test
+.PHONY: test test-watch
 test:
+	go test -vet=all ./... 
+
+test-watch:
 	gow -c test ./...
+
+.PHONY: build
+build:
+	go build ./...
 
 .PHONY: watch
 watch:
@@ -32,4 +39,8 @@ diag:
 $(OUTPUT_DIR)/%.json: $(ED_DIR)/%.json
 	@echo "Processing $@..."
 	$(JQ_CMD) $< > $@
+
+.PHONY: release
+release: build test
+	pnpm release
 
