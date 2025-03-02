@@ -107,6 +107,5 @@ func Load(apiName string) (Events, error) {
 		return Events{}, err
 	}
 	data, err := parseFile(file)
-	fmt.Println("DATA", data)
 	return Events{data.Events}, err
 }
