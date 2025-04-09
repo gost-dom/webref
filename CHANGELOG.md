@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.2](https://github.com/gost-dom/webref/compare/v0.5.1...v0.5.2) (2025-04-09)
+
+
+### Features
+
+* Add Interface.Constructors property ([ee63d82](https://github.com/gost-dom/webref/commit/ee63d82a37789160783e2f8b8b5f9eed975db694))
+
 ## [0.5.1](https://github.com/gost-dom/webref/compare/v0.5.0...v0.5.1) (2025-03-02)
 
 
