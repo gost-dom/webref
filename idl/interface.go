@@ -39,6 +39,12 @@ type BaseInterface struct {
 	// IDL spec allows for overloads, which is represented by multiple entries
 	// with the same name.
 	Operations []Operation
+
+	// Constructors specify IDL interface constructors. Multiple overloads can
+	// exist to support different arguments.
+	//
+	// See also: https://webidl.spec.whatwg.org/#idl-constructors
+	Constructors []Constructor
 	// Includes represent interfaces included using the includes IDL statement.
 	//
 	// See also: https://webidl.spec.whatwg.org/#includes-statement
@@ -116,6 +122,10 @@ type Operation struct {
 	ReturnType Type
 	Arguments  []Argument
 	Static     bool
+}
+
+type Constructor struct {
+	Arguments []Argument
 }
 
 type Argument struct {

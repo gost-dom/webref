@@ -47,12 +47,14 @@ func (s *Spec) createInterface(n Name) Interface {
 
 	jsonAttributes := slices.Collect(n.Attributes())
 	jsonOperations := slices.Collect(n.Operations())
+	jsonConstructors := slices.Collect(n.Constructors())
 
 	intf := Interface{
 		BaseInterface: BaseInterface{
 			Name:         n.Name,
 			Attributes:   make([]Attribute, len(jsonAttributes)),
 			Operations:   make([]Operation, len(jsonOperations)),
+			Constructors: make([]Constructor, len(jsonConstructors)),
 			InternalSpec: n,
 			Mixin:        n.Type == "interface mixin",
 		},
@@ -76,6 +78,11 @@ func (s *Spec) createInterface(n Name) Interface {
 			ReturnType:      getReturnType(a),
 			Arguments:       createMethodArguments(a),
 			Static:          a.Special == "static",
+		}
+	}
+	for i, c := range jsonConstructors {
+		intf.Constructors[i] = Constructor{
+			Arguments: createMethodArguments(c),
 		}
 	}
 	return intf

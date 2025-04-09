@@ -24,10 +24,23 @@ func (n Name) Attributes() iter.Seq[NameMember] {
 		}
 	}
 }
+
 func (n Name) Operations() iter.Seq[NameMember] {
 	return func(yield func(NameMember) bool) {
 		for _, m := range n.Members {
 			if m.Type == "operation" {
+				if !yield(m) {
+					return
+				}
+			}
+		}
+	}
+}
+
+func (n Name) Constructors() iter.Seq[NameMember] {
+	return func(yield func(NameMember) bool) {
+		for _, m := range n.Members {
+			if m.Type == "constructor" {
 				if !yield(m) {
 					return
 				}

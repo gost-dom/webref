@@ -34,6 +34,26 @@ func (s *IdlInterfacesTestSuite) SetupTest() {
 	s.Gomega = gomega.NewWithT(s.T())
 }
 
+func (s *IdlInterfacesTestSuite) TestConstructor() {
+	element := s.dom.Interfaces["Element"]
+	s.Expect(element.Constructors).To(BeEmpty())
+
+	text := s.dom.Interfaces["Text"]
+	s.Expect(text.Constructors).To(HaveExactElements(
+		Constructor{Arguments: []Argument{{
+			Name: "data",
+			Type: Type{
+				Kind:      KindSimple,
+				Name:      "DOMString",
+				Nullable:  false,
+				TypeParam: nil,
+			},
+			Variadic: false,
+			Optional: true,
+		}}},
+	))
+}
+
 func (s *IdlInterfacesTestSuite) TestAnchorIncludeHyperlinkUtils() {
 	actual := s.html.Interfaces["HTMLAnchorElement"].Includes
 	s.Expect(actual).To(ContainElement(HaveField("Name", "HTMLHyperlinkElementUtils")))
