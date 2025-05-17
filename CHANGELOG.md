@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.3](https://github.com/gost-dom/webref/compare/v0.5.2...v0.5.3) (2025-05-17)
+
+
+### Features
+
+* Expose iterable types in interface ([d473db1](https://github.com/gost-dom/webref/commit/d473db16dc5f5d95b0c83e6cce14b52b2566c669))
+
 ## [0.5.2](https://github.com/gost-dom/webref/compare/v0.5.1...v0.5.2) (2025-04-09)
 
 
