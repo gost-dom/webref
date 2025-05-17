@@ -164,6 +164,31 @@ func (s *IdlInterfacesTestSuite) TestOptionalArgs() {
 	s.Assert().True(op.Arguments[1].Optional, "URLSearchParams.has - second argument optional")
 }
 
+func (s *IdlInterfacesTestSuite) TestNodeInsertBefore() {
+	assert := s.Assert()
+
+	intf, found := s.dom.Interfaces["Node"]
+	assert.True(found)
+
+	op, found := intf.GetOperation("insertBefore")
+	s.Assert().False(op.Arguments[0].Type.Nullable, "Node.insertBefore - first argument nullable")
+	s.Assert().True(op.Arguments[1].Type.Nullable, "Node.insertBefore - second argument nullable")
+}
+
+func (s *IdlInterfacesTestSuite) TestIterable() {
+	assert := s.Assert()
+
+	url, foundURL := s.url.Interfaces["URL"]
+	assert.True(foundURL)
+	assert.Len(url.IterableTypes, 0)
+
+	usp, foundUSP := s.url.Interfaces["URLSearchParams"]
+	assert.True(foundUSP)
+	assert.Len(usp.IterableTypes, 2)
+	assert.Equal("USVString", usp.IterableTypes[0].Name)
+	assert.Equal("USVString", usp.IterableTypes[1].Name)
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }

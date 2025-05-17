@@ -96,6 +96,15 @@ type Interface struct {
 	BaseInterface
 	Inheritance string
 	Includes    []Interface
+	// IteratorTypes indicates if this interface is [iterable]. The value
+	// can:
+	//
+	// - Be Empty, this interface is not iterable
+	// - Have one element, the interface has a value iterator
+	// - Have two elements, the interface has a pair iterator
+	//
+	// [iterable]: https://webidl.spec.whatwg.org/#idl-iterable
+	IterableTypes []Type
 }
 
 type InterfaceMember struct {
@@ -133,6 +142,7 @@ type Argument struct {
 	Type     Type
 	Variadic bool
 	Optional bool
+	Nullable bool
 }
 
 // Attributes iterates and return all attributes from the IDO interface i. If

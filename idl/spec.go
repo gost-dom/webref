@@ -48,6 +48,7 @@ func (s *Spec) createInterface(n Name) Interface {
 	jsonAttributes := slices.Collect(n.Attributes())
 	jsonOperations := slices.Collect(n.Operations())
 	jsonConstructors := slices.Collect(n.Constructors())
+	iterableTypes := n.IterableTypes()
 
 	intf := Interface{
 		BaseInterface: BaseInterface{
@@ -61,6 +62,11 @@ func (s *Spec) createInterface(n Name) Interface {
 		Inheritance: n.Inheritance,
 		Includes:    make([]Interface, len(includedNames)),
 	}
+	intf.IterableTypes = make([]Type, len(iterableTypes))
+	for i, t := range iterableTypes {
+		intf.IterableTypes[i] = convertType(t)
+	}
+
 	for i, n := range includedNames {
 		intf.Includes[i] = s.createInterface(s.IdlNames[n])
 	}

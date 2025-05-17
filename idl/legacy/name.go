@@ -48,3 +48,16 @@ func (n Name) Constructors() iter.Seq[NameMember] {
 		}
 	}
 }
+
+func (n Name) IterableTypes() []IdlType {
+	for _, m := range n.Members {
+		if m.Type == "iterable" {
+			types := m.IdlType
+			if types.IdlType != nil {
+				return []IdlType{*types.IdlType}
+			}
+			return types.Types
+		}
+	}
+	return nil
+}
