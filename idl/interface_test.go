@@ -201,6 +201,7 @@ func (s *IdlInterfacesTestSuite) TestUnionType() {
 	send, found := intf.GetOperation("send")
 	assert.True(found, "XHR has a send method")
 	assert.Equal(KindUnion, send.Arguments[0].Type.Kind)
+	assert.True(send.Arguments[0].Type.Nullable)
 	assert.Equal("Document", send.Arguments[0].Type.Types[0].Name)
 	assert.Equal("XMLHttpRequestBodyInit", send.Arguments[0].Type.Types[1].Name)
 }

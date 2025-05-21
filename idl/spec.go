@@ -128,8 +128,9 @@ func convertSequence(t IdlType) Type {
 func createType(t *IdlType) Type {
 	if t.Union {
 		res := Type{
-			Kind:  KindUnion,
-			Types: make([]Type, len(t.IType.Types)),
+			Kind:     KindUnion,
+			Nullable: t.Nullable,
+			Types:    make([]Type, len(t.IType.Types)),
 		}
 		for i, u := range t.IType.Types {
 			res.Types[i] = createType(&u)
