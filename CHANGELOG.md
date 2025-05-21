@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.5](https://github.com/gost-dom/webref/compare/v0.5.4...v0.5.5) (2025-05-21)
+
+
+### Bug Fixes
+
+* union types can be nullable ([5a3db2c](https://github.com/gost-dom/webref/commit/5a3db2c938fca276602c7a6734f00d4ff6595870))
+
 ## [0.5.4](https://github.com/gost-dom/webref/compare/v0.5.3...v0.5.4) (2025-05-21)
 
 
