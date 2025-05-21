@@ -71,10 +71,9 @@ func (s *Spec) createInterface(n Name) Interface {
 		intf.Includes[i] = s.createInterface(s.IdlNames[n])
 	}
 	for i, a := range jsonAttributes {
-		name, nullable := FindMemberAttributeType(a)
 		intf.Attributes[i] = Attribute{
 			InterfaceMember: createInterfaceMember(a),
-			Type:            Type{Name: name, Nullable: nullable},
+			Type:            getAttributeType(a),
 			Readonly:        a.Readonly,
 		}
 	}
@@ -92,6 +91,13 @@ func (s *Spec) createInterface(n Name) Interface {
 		}
 	}
 	return intf
+}
+
+func getAttributeType(operation NameMember) Type {
+	if t, ok := FindIdlTypeValue(operation.IdlType, "attribute-type"); ok {
+		return convertType(t)
+	}
+	return Type{}
 }
 
 func getReturnType(operation NameMember) Type {
@@ -119,14 +125,29 @@ func convertSequence(t IdlType) Type {
 	}
 }
 
+func createType(t *IdlType) Type {
+	if t.Union {
+		res := Type{
+			Kind:  KindUnion,
+			Types: make([]Type, len(t.IType.Types)),
+		}
+		for i, u := range t.IType.Types {
+			res.Types[i] = createType(&u)
+		}
+		return res
+	} else {
+		argType := t.IType.TypeName
+		nullable := t.Nullable
+		return Type{Name: argType, Nullable: nullable}
+	}
+}
+
 func createMethodArguments(n NameMember) []Argument {
 	result := make([]Argument, len(n.Arguments))
 	for i, a := range n.Arguments {
-		argType := a.IdlType.IdlType.IType.TypeName
-		nullable := a.IdlType.IdlType.Nullable
 		result[i] = Argument{
 			Name:     a.Name,
-			Type:     Type{Name: argType, Nullable: nullable},
+			Type:     createType(a.IdlType.IdlType),
 			Variadic: a.Variadic,
 			Optional: a.Optional,
 		}

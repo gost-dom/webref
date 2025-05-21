@@ -17,6 +17,10 @@ const (
 	//
 	// When the kind is a sequence, the value is present on the TypeParam field.
 	KindSequence
+	// The type is a union of types separated by 'or's
+	//
+	// When the kind is a union, the types are represented by the types field
+	KindUnion
 )
 
 // Represents an [IDL type]
@@ -30,6 +34,7 @@ type Type struct {
 	// TypeParam contains the type parameter for generic types, e.g.
 	// sequence<...>
 	TypeParam *Type
+	Types     []Type
 }
 
 type BaseInterface struct {

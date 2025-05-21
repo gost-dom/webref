@@ -18,6 +18,7 @@ type IdlInterfacesTestSuite struct {
 	html Spec
 	url  Spec
 	dom  Spec
+	xhr  Spec
 }
 
 func (s *IdlInterfacesTestSuite) SetupSuite() {
@@ -27,6 +28,8 @@ func (s *IdlInterfacesTestSuite) SetupSuite() {
 	s.html, err = Load("html")
 	s.Assert().NoError(err)
 	s.url, err = Load("url")
+	s.Assert().NoError(err)
+	s.xhr, err = Load("xhr")
 	s.Assert().NoError(err)
 }
 
@@ -187,6 +190,19 @@ func (s *IdlInterfacesTestSuite) TestIterable() {
 	assert.Len(usp.IterableTypes, 2)
 	assert.Equal("USVString", usp.IterableTypes[0].Name)
 	assert.Equal("USVString", usp.IterableTypes[1].Name)
+}
+
+func (s *IdlInterfacesTestSuite) TestUnionType() {
+	assert := s.Assert()
+
+	intf, found := s.xhr.Interfaces["XMLHttpRequest"]
+	assert.True(found)
+
+	send, found := intf.GetOperation("send")
+	assert.True(found, "XHR has a send method")
+	assert.Equal(KindUnion, send.Arguments[0].Type.Kind)
+	assert.Equal("Document", send.Arguments[0].Type.Types[0].Name)
+	assert.Equal("XMLHttpRequestBodyInit", send.Arguments[0].Type.Types[1].Name)
 }
 
 func TestExampleTestSuite(t *testing.T) {
