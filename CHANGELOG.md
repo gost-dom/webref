@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.4](https://github.com/gost-dom/webref/compare/v0.5.3...v0.5.4) (2025-05-21)
+
+
+### Features
+
+* Support union types in operation arguments ([2e5a6c2](https://github.com/gost-dom/webref/commit/2e5a6c2abb38bc77290d9835af7496e4d1d1e14e))
+
 ## [0.5.3](https://github.com/gost-dom/webref/compare/v0.5.2...v0.5.3) (2025-05-17)
 
 
