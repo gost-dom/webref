@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.6](https://github.com/gost-dom/webref/compare/v0.5.5...v0.5.6) (2025-05-24)
+
+
+### Bug Fixes
+
+* Defer file close _after_ checking for error ([db5ec46](https://github.com/gost-dom/webref/commit/db5ec4615c1994cc3ea7b5f86959afe2c81d1cdc))
+
 ## [0.5.5](https://github.com/gost-dom/webref/compare/v0.5.4...v0.5.5) (2025-05-21)
 
 
