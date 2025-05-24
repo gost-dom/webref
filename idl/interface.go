@@ -27,14 +27,14 @@ const (
 //
 // [IDL type]: https://webidl.spec.whatwg.org/#idl-types
 type Type struct {
-	// Type name. This is a simplification so far.
 	Kind     TypeKind
 	Name     string
 	Nullable bool
 	// TypeParam contains the type parameter for generic types, e.g.
 	// sequence<...>
 	TypeParam *Type
-	Types     []Type
+	// Types contains the types for union types
+	Types []Type
 }
 
 type BaseInterface struct {
