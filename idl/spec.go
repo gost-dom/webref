@@ -176,11 +176,11 @@ func (s *Spec) initialize() {
 // [webref]: https://github.com/w3c/webref
 func Load(apiName string) (Spec, error) {
 	file, err := specs.Open(fmt.Sprintf("idlparsed/%s.json", apiName))
-	defer file.Close()
-
 	if err != nil {
 		return Spec{}, err
 	}
+	defer file.Close()
+
 	return ParseIdlJsonReader(file)
 }
 
