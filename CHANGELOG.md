@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.7](https://github.com/gost-dom/webref/compare/v0.5.6...v0.5.7) (2025-06-16)
+
+
+### Features
+
+* Expose argument default values ([00c35c9](https://github.com/gost-dom/webref/commit/00c35c9bef6633107e2a06bb9a478b270f0a305e))
+
 ## [0.5.6](https://github.com/gost-dom/webref/compare/v0.5.5...v0.5.6) (2025-05-24)
 
 
