@@ -15,10 +15,11 @@ import (
 type IdlInterfacesTestSuite struct {
 	suite.Suite
 	gomega.Gomega
-	html Spec
-	url  Spec
-	dom  Spec
-	xhr  Spec
+	html  Spec
+	url   Spec
+	dom   Spec
+	xhr   Spec
+	fetch Spec
 }
 
 func (s *IdlInterfacesTestSuite) SetupSuite() {
@@ -31,6 +32,8 @@ func (s *IdlInterfacesTestSuite) SetupSuite() {
 	s.Assert().NoError(err)
 	s.xhr, err = Load("xhr")
 	s.Assert().NoError(err)
+	s.fetch, err = Load("fetch")
+	s.Assert().NoError(err)
 }
 
 func (s *IdlInterfacesTestSuite) SetupTest() {
@@ -42,19 +45,19 @@ func (s *IdlInterfacesTestSuite) TestConstructor() {
 	s.Expect(element.Constructors).To(BeEmpty())
 
 	text := s.dom.Interfaces["Text"]
-	s.Expect(text.Constructors).To(HaveExactElements(
-		Constructor{Arguments: []Argument{{
-			Name: "data",
-			Type: Type{
-				Kind:      KindSimple,
-				Name:      "DOMString",
-				Nullable:  false,
-				TypeParam: nil,
-			},
-			Variadic: false,
-			Optional: true,
-		}}},
-	))
+	s.Expect(text.Constructors).To(HaveLen(1))
+	cons := text.Constructors[0]
+	s.Expect(cons.Arguments).To(HaveLen(1))
+	arg := cons.Arguments[0]
+	s.Expect(arg.Name).To(Equal("data"))
+	s.Expect(arg.Variadic).To(BeFalse())
+	s.Expect(arg.Optional).To(BeTrue())
+	s.Expect(arg.Type).To(Equal(Type{
+		Kind:      KindSimple,
+		Name:      "DOMString",
+		Nullable:  false,
+		TypeParam: nil,
+	}))
 }
 
 func (s *IdlInterfacesTestSuite) TestAnchorIncludeHyperlinkUtils() {
@@ -204,6 +207,17 @@ func (s *IdlInterfacesTestSuite) TestUnionType() {
 	assert.True(send.Arguments[0].Type.Nullable)
 	assert.Equal("Document", send.Arguments[0].Type.Types[0].Name)
 	assert.Equal("XMLHttpRequestBodyInit", send.Arguments[0].Type.Types[1].Name)
+}
+
+func (s *IdlInterfacesTestSuite) TestFetchResponse() {
+	assert := s.Assert()
+
+	response, found := s.fetch.Interfaces["Response"]
+	assert.True(found)
+
+	args := response.Constructors[0].Arguments
+	assert.NotNil(args[0].Default)
+	assert.Equal("null", string(args[0].Default.Type))
 }
 
 func TestExampleTestSuite(t *testing.T) {

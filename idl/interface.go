@@ -76,7 +76,7 @@ func (i BaseInterface) GetOperation(name string) (Operation, bool) {
 	return Operation{}, false
 }
 
-// Gets the specifications for operation with the specified name. If nothing is
+// Gets the specifications for attribute with the specified name. If nothing is
 // configured, default settings are returned.
 func (i BaseInterface) GetAttribute(name string) (a Attribute, found bool) {
 	for _, a := range i.Attributes {
@@ -148,6 +148,23 @@ type Argument struct {
 	Variadic bool
 	Optional bool
 	Nullable bool
+	Default  *DefaultValue
+}
+
+// DefaultValueType represents
+type DefaultValueType string
+
+const (
+	DefaultTypeString    = "string"
+	DefaultTypeNull      = "null"
+	DefaultTypeUndefined = "undefined"
+	DefaultTypeNumber    = "number"
+	DefaultTypeBool      = "number"
+)
+
+type DefaultValue struct {
+	Type  DefaultValueType
+	Value any
 }
 
 // Attributes iterates and return all attributes from the IDO interface i. If

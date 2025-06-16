@@ -20,9 +20,14 @@ type Parsed struct {
 
 type ArgumentType struct {
 	Stuff
-	Default  any  `json:"default"`
-	Optional bool `json:"optional"`
-	Variadic bool `json:"variadic"`
+	Default  *ArgumentDefault `json:"default"`
+	Optional bool             `json:"optional"`
+	Variadic bool             `json:"variadic"`
+}
+
+type ArgumentDefault struct {
+	Type  string `json:"type"`
+	Value any    `json:"value"`
 }
 
 // This type should be avoided, but may contain information missing on

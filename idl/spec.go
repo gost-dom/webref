@@ -152,6 +152,12 @@ func createMethodArguments(n NameMember) []Argument {
 			Variadic: a.Variadic,
 			Optional: a.Optional,
 		}
+		if a.Default != nil {
+			result[i].Default = &DefaultValue{
+				Type:  DefaultValueType(a.Default.Type),
+				Value: a.Default.Value,
+			}
+		}
 	}
 	return result
 }
