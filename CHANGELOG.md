@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.8](https://github.com/gost-dom/webref/compare/v0.5.7...v0.5.8) (2025-06-29)
+
+
+### Features
+
+* Support Promise<> return types ([666a361](https://github.com/gost-dom/webref/commit/666a3619df580b7737ae023894e92f3e9f98cd27))
+
 ## [0.5.7](https://github.com/gost-dom/webref/compare/v0.5.6...v0.5.7) (2025-06-16)
 
 
