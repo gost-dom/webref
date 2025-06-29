@@ -111,6 +111,9 @@ func convertType(t IdlType) Type {
 	if t.Generic == "sequence" {
 		return convertSequence(t)
 	}
+	if t.Generic == "Promise" {
+		return convertPromise(t)
+	}
 	return Type{Name: t.IType.TypeName, Nullable: t.Nullable}
 }
 
@@ -119,6 +122,17 @@ func convertSequence(t IdlType) Type {
 	inner := convertType(innerIdl)
 	return Type{
 		Kind:      KindSequence,
+		Name:      t.IType.TypeName,
+		Nullable:  t.Nullable,
+		TypeParam: &inner,
+	}
+}
+
+func convertPromise(t IdlType) Type {
+	innerIdl, _ := FindIdlTypeValue(t.IType, "return-type")
+	inner := convertType(innerIdl)
+	return Type{
+		Kind:      KindPromise,
 		Name:      t.IType.TypeName,
 		Nullable:  t.Nullable,
 		TypeParam: &inner,

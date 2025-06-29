@@ -21,6 +21,11 @@ const (
 	//
 	// When the kind is a union, the types are represented by the types field
 	KindUnion
+	// KindPromise represents types specified as Promise<...>
+	//
+	// When the kind is Promise, the type of the fulfilled value is represented
+	// by the TypeParam field.
+	KindPromise
 )
 
 // Represents an [IDL type]

@@ -15,11 +15,12 @@ import (
 type IdlInterfacesTestSuite struct {
 	suite.Suite
 	gomega.Gomega
-	html  Spec
-	url   Spec
-	dom   Spec
-	xhr   Spec
-	fetch Spec
+	html    Spec
+	url     Spec
+	dom     Spec
+	xhr     Spec
+	fetch   Spec
+	streams Spec
 }
 
 func (s *IdlInterfacesTestSuite) SetupSuite() {
@@ -33,6 +34,8 @@ func (s *IdlInterfacesTestSuite) SetupSuite() {
 	s.xhr, err = Load("xhr")
 	s.Assert().NoError(err)
 	s.fetch, err = Load("fetch")
+	s.Assert().NoError(err)
+	s.streams, err = Load("streams")
 	s.Assert().NoError(err)
 }
 
@@ -220,6 +223,17 @@ func (s *IdlInterfacesTestSuite) TestFetchResponse() {
 	assert.Equal("null", string(args[0].Default.Type))
 }
 
+func (s *IdlInterfacesTestSuite) TestReadReturnsAPromise() {
+	assert := s.Assert()
+	reader, ok := s.streams.Interfaces["ReadableStreamDefaultReader"]
+	assert.True(ok)
+
+	read, ok := reader.GetOperation("read")
+	assert.Equal(idl.KindPromise, read.ReturnType.Kind, "Reader.read returns a promise")
+	typeParam := read.ReturnType.TypeParam
+	assert.Equal(idl.KindSimple, typeParam.Kind)
+	assert.Equal("ReadableStreamReadResult", typeParam.Name)
+}
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }
