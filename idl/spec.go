@@ -31,7 +31,8 @@ type Spec struct {
 	//
 	// This property will eventually be removed
 	ParsedIdlFile
-	Interfaces map[string]Interface
+	Interfaces   map[string]Interface
+	Dictionaries map[string]Dictionary
 }
 
 func createInterfaceMember(m NameMember) InterfaceMember {
@@ -40,6 +41,19 @@ func createInterfaceMember(m NameMember) InterfaceMember {
 		Name:         m.Name,
 		Stringifier:  m.Special == "stringifier",
 	}
+}
+
+func (s *Spec) createDictionary(n Name) Dictionary {
+	dictionary := s.IdlNames[n.Name]
+	result := Dictionary{}
+	for f := range dictionary.Fields() {
+		entry := DictionaryEntry{
+			Key:   f.Name,
+			Value: convertType(*f.IdlType.IdlType),
+		}
+		result.Entries = append(result.Entries, entry)
+	}
+	return result
 }
 
 func (s *Spec) createInterface(n Name) Interface {
@@ -180,10 +194,13 @@ func createMethodArguments(n NameMember) []Argument {
 // JSON data.
 func (s *Spec) initialize() {
 	s.Interfaces = make(map[string]Interface)
+	s.Dictionaries = make(map[string]Dictionary)
 	for name, spec := range s.IdlNames {
 		switch spec.Type {
 		case "interface", "interface mixin":
 			s.Interfaces[name] = s.createInterface(spec)
+		case "dictionary":
+			s.Dictionaries[name] = s.createDictionary(spec)
 		}
 	}
 }

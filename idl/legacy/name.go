@@ -25,10 +25,10 @@ func (n Name) Attributes() iter.Seq[NameMember] {
 	}
 }
 
-func (n Name) Operations() iter.Seq[NameMember] {
+func (n Name) membersOfType(t string) iter.Seq[NameMember] {
 	return func(yield func(NameMember) bool) {
 		for _, m := range n.Members {
-			if m.Type == "operation" {
+			if m.Type == t {
 				if !yield(m) {
 					return
 				}
@@ -37,16 +37,15 @@ func (n Name) Operations() iter.Seq[NameMember] {
 	}
 }
 
+func (n Name) Operations() iter.Seq[NameMember] {
+	return n.membersOfType("operation")
+}
+
 func (n Name) Constructors() iter.Seq[NameMember] {
-	return func(yield func(NameMember) bool) {
-		for _, m := range n.Members {
-			if m.Type == "constructor" {
-				if !yield(m) {
-					return
-				}
-			}
-		}
-	}
+	return n.membersOfType("constructor")
+}
+func (n Name) Fields() iter.Seq[NameMember] {
+	return n.membersOfType("field")
 }
 
 func (n Name) IterableTypes() []IdlType {
