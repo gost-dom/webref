@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.9](https://github.com/gost-dom/webref/compare/v0.5.8...v0.5.9) (2025-07-03)
+
+
+### Features
+
+* Expose dictionary specifications ([f100a8a](https://github.com/gost-dom/webref/commit/f100a8a120f57027bca7190abfc77cced5afdb3e))
+
 ## [0.5.8](https://github.com/gost-dom/webref/compare/v0.5.7...v0.5.8) (2025-06-29)
 
 
