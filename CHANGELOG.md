@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.10](https://github.com/gost-dom/webref/compare/v0.5.9...v0.5.10) (2025-11-18)
+
+
+### Features
+
+* Support partial interfaces, and merging ([8242dcc](https://github.com/gost-dom/webref/commit/8242dcc7aca8f0f7e343710f4066d1eefe1b4199))
+
 ## [0.5.9](https://github.com/gost-dom/webref/compare/v0.5.8...v0.5.9) (2025-07-03)
 
 
