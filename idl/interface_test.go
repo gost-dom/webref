@@ -1,6 +1,7 @@
 package idl_test
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/gost-dom/webref/idl"
@@ -234,6 +235,33 @@ func (s *IdlInterfacesTestSuite) TestReadReturnsAPromise() {
 	assert.Equal(idl.KindSimple, typeParam.Kind)
 	assert.Equal("ReadableStreamReadResult", typeParam.Name)
 }
+
+func (s *IdlInterfacesTestSuite) TestPartialInterface() {
+	assert := s.Assert()
+
+	intf := slices.Collect(s.html.Partials("Element"))
+	assert.Len(intf, 1)
+	assert.True(intf[0].Partial, "Element is partial interface")
+
+	innerHTML, found := intf[0].GetAttribute("innerHTML")
+	assert.True(found, "innerHTML found on Element partial interface")
+	assert.Equal(KindUnion, innerHTML.Type.Kind)
+}
+
+func (s *IdlInterfacesTestSuite) TestMergePartials() {
+	assert := s.Assert()
+
+	element := s.dom.Interfaces["Element"]
+	merged := element.MergePartials(s.html)
+
+	innerHTML, found := merged.GetAttribute("innerHTML")
+	assert.True(found)
+	assert.Equal(KindUnion, innerHTML.Type.Kind)
+
+	_, found = element.GetAttribute("innerHTML")
+	assert.False(found, "Original element was not mutated")
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }

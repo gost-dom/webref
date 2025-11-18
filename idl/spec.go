@@ -72,6 +72,7 @@ func (s *Spec) createInterface(n Name) Interface {
 			Constructors: make([]Constructor, len(jsonConstructors)),
 			InternalSpec: n,
 			Mixin:        n.Type == "interface mixin",
+			Partial:      n.Partial,
 		},
 		Inheritance: n.Inheritance,
 		Includes:    make([]Interface, len(includedNames)),
@@ -128,6 +129,17 @@ func convertType(t IdlType) Type {
 	if t.Generic == "Promise" {
 		return convertPromise(t)
 	}
+	if t.Union {
+		res := Type{
+			Kind:     KindUnion,
+			Nullable: t.Nullable,
+			Types:    make([]Type, len(t.IType.Types)),
+		}
+		for i, u := range t.IType.Types {
+			res.Types[i] = convertType(u)
+		}
+		return res
+	}
 	return Type{Name: t.IType.TypeName, Nullable: t.Nullable}
 }
 
@@ -153,30 +165,12 @@ func convertPromise(t IdlType) Type {
 	}
 }
 
-func createType(t *IdlType) Type {
-	if t.Union {
-		res := Type{
-			Kind:     KindUnion,
-			Nullable: t.Nullable,
-			Types:    make([]Type, len(t.IType.Types)),
-		}
-		for i, u := range t.IType.Types {
-			res.Types[i] = createType(&u)
-		}
-		return res
-	} else {
-		argType := t.IType.TypeName
-		nullable := t.Nullable
-		return Type{Name: argType, Nullable: nullable}
-	}
-}
-
 func createMethodArguments(n NameMember) []Argument {
 	result := make([]Argument, len(n.Arguments))
 	for i, a := range n.Arguments {
 		result[i] = Argument{
 			Name:     a.Name,
-			Type:     createType(a.IdlType.IdlType),
+			Type:     convertType(*a.IdlType.IdlType),
 			Variadic: a.Variadic,
 			Optional: a.Optional,
 		}
@@ -201,6 +195,19 @@ func (s *Spec) initialize() {
 			s.Interfaces[name] = s.createInterface(spec)
 		case "dictionary":
 			s.Dictionaries[name] = s.createDictionary(spec)
+		}
+	}
+}
+
+func (s *Spec) Partials(name string) iter.Seq[Interface] {
+	return func(yield func(Interface) bool) {
+		for _, spec := range s.IdlExtendedNames[name] {
+			switch spec.Type {
+			case "interface", "interface mixin":
+				if !yield(s.createInterface(spec.Name)) {
+					return
+				}
+			}
 		}
 	}
 }

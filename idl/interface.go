@@ -1,7 +1,6 @@
 package idl
 
 import (
-	"fmt"
 	"iter"
 
 	. "github.com/gost-dom/webref/idl/legacy"
@@ -68,6 +67,16 @@ type BaseInterface struct {
 	//
 	// [interface mixin]: https://webidl.spec.whatwg.org/#idl-interface-mixins
 	Mixin bool
+	// Partial tells if this is a [partial interface].
+	//
+	// [partial interface]: https://webidl.spec.whatwg.org/#dfn-partial-interface
+	Partial bool
+}
+
+func (i BaseInterface) mergePartial(p Interface) BaseInterface {
+	i.Operations = append(i.Operations, p.Operations...)
+	i.Attributes = append(i.Attributes, p.Attributes...)
+	return i
 }
 
 // Gets the specifications for operation with the specified name. If nothing is
@@ -85,13 +94,11 @@ func (i BaseInterface) GetOperation(name string) (Operation, bool) {
 // configured, default settings are returned.
 func (i BaseInterface) GetAttribute(name string) (a Attribute, found bool) {
 	for _, a := range i.Attributes {
-		fmt.Println("Testing", a.Name)
 		if a.Name == name {
-			fmt.Println("Returning")
 			return a, true
 		}
 	}
-	return Attribute{}, false
+	return
 }
 
 // Interface represents an interface specification in the webref IDL files.
@@ -115,6 +122,24 @@ type Interface struct {
 	//
 	// [iterable]: https://webidl.spec.whatwg.org/#idl-iterable
 	IterableTypes []Type
+}
+
+// MergePartials finds partial interfaces in a different [Spec] extending this
+// interface.
+//
+// Example, "Element" is defined in the DOM spec, but outerHTML/innerHTML are
+// defined in "partial interface Element" in the HTML spec.
+func (i Interface) MergePartials(spec Spec) Interface {
+	for p := range spec.Partials(i.Name) {
+		i = i.mergePartial(p)
+	}
+	return i
+}
+
+func (i Interface) mergePartial(p Interface) Interface {
+	i.BaseInterface = i.BaseInterface.mergePartial(p)
+	i.Includes = append(i.Includes, p.Includes...)
+	return i
 }
 
 type InterfaceMember struct {

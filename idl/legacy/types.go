@@ -33,8 +33,7 @@ type ArgumentDefault struct {
 // This type should be avoided, but may contain information missing on
 // [Interface].
 type ExtendedName struct {
-	Fragment string
-	Type     string
+	Name
 	ExtAttrs []ExtAttr `json:"extAttrs"`
 	Target   string
 	Includes string
