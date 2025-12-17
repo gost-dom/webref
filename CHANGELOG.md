@@ -1,6 +1,14 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.11](https://github.com/gost-dom/webref/compare/v0.5.10...v0.5.11) (2025-12-17)
+
+
+### Features
+
+* Export Exposed extended attribute on interfaces ([9435c98](https://github.com/gost-dom/webref/commit/9435c98fda20204c3091f5d039a7e3078e66ca2b))
+* Export interface Global extended attributes ([1d94679](https://github.com/gost-dom/webref/commit/1d946794fd5b4db78bcf2ae70f78497b26b40396))
+
 ## [0.5.10](https://github.com/gost-dom/webref/compare/v0.5.9...v0.5.10) (2025-11-18)
 
 
