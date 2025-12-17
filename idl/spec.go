@@ -58,22 +58,7 @@ func (s *Spec) createDictionary(n Name) Dictionary {
 
 // interfaceGlobal extract the [Global] extended idl attribute from an interface
 func interfaceGlobal(n Name) []string {
-	for _, a := range n.ExtAttrs {
-		if a.Type == "extended-attribute" &&
-			a.Name == "Global" {
-			switch a.Rhs.Type {
-			case "identifier":
-				return []string{a.Rhs.Value.ValueName}
-			case "identifier-list":
-				res := make([]string, len(a.Rhs.Value.Values))
-				for i, v := range a.Rhs.Value.Values {
-					res[i] = v.Value.ValueName
-				}
-				return res
-			}
-		}
-	}
-	return nil
+	return n.ExtendedAttributes("Global")
 }
 
 func (s *Spec) createInterface(n Name) Interface {

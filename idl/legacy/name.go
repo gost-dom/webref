@@ -38,6 +38,31 @@ func (n Name) membersOfType(t string) iter.Seq[NameMember] {
 	}
 }
 
+// Extract extended attributes that are simple strings or lists. E.g.,
+// Global/Exposed in the SharedWorkerGlobalScope that targets two global names
+// and is exposed to one.
+//
+//	[Global=(Worker,SharedWorker),Exposed=SharedWorker]
+//	interface SharedWorkerGlobalScope : WorkerGlobalScope {
+func (n Name) ExtendedAttributes(name string) []string {
+	for _, a := range n.ExtAttrs {
+		if a.Type == "extended-attribute" &&
+			a.Name == name {
+			switch a.Rhs.Type {
+			case "identifier":
+				return []string{a.Rhs.Value.ValueName}
+			case "identifier-list":
+				res := make([]string, len(a.Rhs.Value.Values))
+				for i, v := range a.Rhs.Value.Values {
+					res[i] = v.Value.ValueName
+				}
+				return res
+			}
+		}
+	}
+	return nil
+}
+
 func (n Name) Operations() iter.Seq[NameMember] {
 	return n.membersOfType("operation")
 }
