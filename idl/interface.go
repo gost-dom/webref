@@ -129,6 +129,7 @@ type Interface struct {
 	// [iterable]: https://webidl.spec.whatwg.org/#idl-iterable
 	IterableTypes []Type
 	Global        []string
+	Exposed       []string
 }
 
 // MergePartials finds partial interfaces in a different [Spec] extending this

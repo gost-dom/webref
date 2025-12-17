@@ -273,6 +273,14 @@ func (s *IdlInterfacesTestSuite) TestGlobalScope() {
 	s.Assert().Equal([]string{"Worker", "ServiceWorker"}, globalScope.Global)
 }
 
+func (s *IdlInterfacesTestSuite) TestInterfaceExposed() {
+	window := s.html.Interfaces["Window"]
+	s.Assert().Equal([]string{"Window"}, window.Exposed)
+
+	fetchReq := s.fetch.Interfaces["Request"]
+	s.Assert().Equal([]string{"Window", "Worker"}, fetchReq.Exposed)
+}
+
 func TestExampleTestSuite(t *testing.T) {
 	suite.Run(t, new(IdlInterfacesTestSuite))
 }

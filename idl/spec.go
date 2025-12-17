@@ -56,11 +56,6 @@ func (s *Spec) createDictionary(n Name) Dictionary {
 	return result
 }
 
-// interfaceGlobal extract the [Global] extended idl attribute from an interface
-func interfaceGlobal(n Name) []string {
-	return n.ExtendedAttributes("Global")
-}
-
 func (s *Spec) createInterface(n Name) Interface {
 	includedNames := s.IdlExtendedNames[n.Name].Includes()
 
@@ -81,7 +76,8 @@ func (s *Spec) createInterface(n Name) Interface {
 		},
 		Inheritance: n.Inheritance,
 		Includes:    make([]Interface, len(includedNames)),
-		Global:      interfaceGlobal(n),
+		Global:      n.ExtendedAttributes("Global"),
+		Exposed:     n.ExtendedAttributes("Exposed"),
 	}
 	intf.IterableTypes = make([]Type, len(iterableTypes))
 	for i, t := range iterableTypes {
