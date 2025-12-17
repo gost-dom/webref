@@ -109,6 +109,12 @@ func (i BaseInterface) GetAttribute(name string) (a Attribute, found bool) {
 //	interface Animal {
 //		attribute DOMString name;
 //	};
+//
+// Global represents the value of the [Global extended attribute]. It is
+// targeted by the [Exposed extended attribute].
+//
+// [Global extended attribute]: https://webidl.spec.whatwg.org/#Global
+// [Exposed extended attribute]: https://webidl.spec.whatwg.org/#Exposed
 type Interface struct {
 	BaseInterface
 	Inheritance string
@@ -122,6 +128,7 @@ type Interface struct {
 	//
 	// [iterable]: https://webidl.spec.whatwg.org/#idl-iterable
 	IterableTypes []Type
+	Global        []string
 }
 
 // MergePartials finds partial interfaces in a different [Spec] extending this

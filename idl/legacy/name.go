@@ -11,6 +11,7 @@ type Name struct {
 	Partial     bool         `json:"partial"`
 	Href        string       `json:"href"`
 	Inheritance string       `json:"Inheritance"`
+	ExtAttrs    []ExtAttr    `json:"extAttrs"`
 }
 
 func (n Name) Attributes() iter.Seq[NameMember] {

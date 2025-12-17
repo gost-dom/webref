@@ -16,12 +16,13 @@ import (
 type IdlInterfacesTestSuite struct {
 	suite.Suite
 	gomega.Gomega
-	html    Spec
-	url     Spec
-	dom     Spec
-	xhr     Spec
-	fetch   Spec
-	streams Spec
+	html           Spec
+	url            Spec
+	dom            Spec
+	xhr            Spec
+	fetch          Spec
+	streams        Spec
+	serviceWorkers Spec
 }
 
 func (s *IdlInterfacesTestSuite) SetupSuite() {
@@ -37,6 +38,8 @@ func (s *IdlInterfacesTestSuite) SetupSuite() {
 	s.fetch, err = Load("fetch")
 	s.Assert().NoError(err)
 	s.streams, err = Load("streams")
+	s.Assert().NoError(err)
+	s.serviceWorkers, err = Load("service-workers")
 	s.Assert().NoError(err)
 }
 
@@ -260,6 +263,14 @@ func (s *IdlInterfacesTestSuite) TestMergePartials() {
 
 	_, found = element.GetAttribute("innerHTML")
 	assert.False(found, "Original element was not mutated")
+}
+
+func (s *IdlInterfacesTestSuite) TestGlobalScope() {
+	window := s.html.Interfaces["Window"]
+	s.Assert().Equal([]string{"Window"}, window.Global)
+
+	globalScope := s.serviceWorkers.Interfaces["ServiceWorkerGlobalScope"]
+	s.Assert().Equal([]string{"Worker", "ServiceWorker"}, globalScope.Global)
 }
 
 func TestExampleTestSuite(t *testing.T) {
