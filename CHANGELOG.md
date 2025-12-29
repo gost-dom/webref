@@ -1,6 +1,13 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.12](https://github.com/gost-dom/webref/compare/v0.5.11...v0.5.12) (2025-12-29)
+
+
+### Features
+
+* Implement Inheritance for Dictionary types ([3ba19ba](https://github.com/gost-dom/webref/commit/3ba19baa33618efbe5c001e160fbbaed79a3f475))
+
 ## [0.5.11](https://github.com/gost-dom/webref/compare/v0.5.10...v0.5.11) (2025-12-17)
 
 
