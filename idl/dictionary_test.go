@@ -9,12 +9,15 @@ import (
 
 type DictionaryTestSuite struct {
 	suite.Suite
-	fetch idl.Spec
+	fetch    idl.Spec
+	uievents idl.Spec
 }
 
 func (s *DictionaryTestSuite) SetupTest() {
 	var err error
 	s.fetch, err = idl.Load("fetch")
+	s.Assert().NoError(err)
+	s.uievents, err = idl.Load("uievents")
 	s.Assert().NoError(err)
 }
 
@@ -24,6 +27,11 @@ func (s *DictionaryTestSuite) TestRequestInitDictionary() {
 	s.Assert().True(ok, "Dictionary has entry: method")
 	s.Assert().Equal("method", method.Key)
 	s.Assert().Equal("ByteString", method.Value.Name)
+}
+
+func (s *DictionaryTestSuite) TestDictionaryInheritance() {
+	keybaordEventInit := s.uievents.Dictionaries["KeyboardEventInit"]
+	s.Assert().Equal("EventModifierInit", keybaordEventInit.Inheritance)
 }
 
 func TestDictionary(t *testing.T) {

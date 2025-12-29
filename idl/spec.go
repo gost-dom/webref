@@ -45,7 +45,9 @@ func createInterfaceMember(m NameMember) InterfaceMember {
 
 func (s *Spec) createDictionary(n Name) Dictionary {
 	dictionary := s.IdlNames[n.Name]
-	result := Dictionary{}
+	result := Dictionary{
+		Inheritance: dictionary.Inheritance,
+	}
 	for f := range dictionary.Fields() {
 		entry := DictionaryEntry{
 			Key:   f.Name,

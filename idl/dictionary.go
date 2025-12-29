@@ -1,7 +1,8 @@
 package idl
 
 type Dictionary struct {
-	Entries []DictionaryEntry
+	Inheritance string
+	Entries     []DictionaryEntry
 }
 
 type DictionaryEntry struct {
