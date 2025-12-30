@@ -37,9 +37,10 @@ type Spec struct {
 
 func createInterfaceMember(m NameMember) InterfaceMember {
 	return InterfaceMember{
-		InternalSpec: m,
-		Name:         m.Name,
-		Stringifier:  m.Special == "stringifier",
+		InternalSpec:      m,
+		LegacyUnforgeable: m.HasExtendedAttributes("LegacyUnforgeable"),
+		Name:              m.Name,
+		Stringifier:       m.Special == "stringifier",
 	}
 }
 

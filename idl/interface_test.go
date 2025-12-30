@@ -265,6 +265,14 @@ func (s *IdlInterfacesTestSuite) TestMergePartials() {
 	assert.False(found, "Original element was not mutated")
 }
 
+func (s *IdlInterfacesTestSuite) TestLegacyUnforgable() {
+	doc := s.dom.Interfaces["Document"]
+	doc = doc.MergePartials(s.html)
+	loc, ok := doc.GetAttribute("location")
+	s.Assert().True(ok, "Document has location")
+	s.Assert().True(loc.LegacyUnforgeable, "Document.location is LegacyUnforgeable")
+}
+
 func (s *IdlInterfacesTestSuite) TestGlobalScope() {
 	window := s.html.Interfaces["Window"]
 	s.Assert().Equal([]string{"Window"}, window.Global)

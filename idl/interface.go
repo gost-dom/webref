@@ -158,7 +158,8 @@ type InterfaceMember struct {
 	// when a string representation is created of an object. Only one member can
 	// be a stringifier. For an operation, an empty name means that it must be
 	// called toString() in JavaScript
-	Stringifier bool
+	Stringifier       bool
+	LegacyUnforgeable bool
 }
 
 // Represents an attribute on an IDL interface

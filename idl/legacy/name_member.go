@@ -17,6 +17,35 @@ type NameMember struct {
 	Href      string         `json:"href"`
 }
 
+func (n NameMember) HasExtendedAttributes(name string) bool {
+	for _, a := range n.ExtAttrs {
+		if a.Type == "extended-attribute" &&
+			a.Name == name {
+			return true
+		}
+	}
+	return false
+}
+
+func (n NameMember) ExtendedAttributes(name string) []string {
+	for _, a := range n.ExtAttrs {
+		if a.Type == "extended-attribute" &&
+			a.Name == name {
+			switch a.Rhs.Type {
+			case "identifier":
+				return []string{a.Rhs.Value.ValueName}
+			case "identifier-list":
+				res := make([]string, len(a.Rhs.Value.Values))
+				for i, v := range a.Rhs.Value.Values {
+					res[i] = v.Value.ValueName
+				}
+				return res
+			}
+		}
+	}
+	return nil
+}
+
 func FindMemberReturnType(member NameMember) (string, bool) {
 	return FindIdlType(member.IdlType, "return-type")
 }
