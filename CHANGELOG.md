@@ -1,6 +1,8 @@
 # Changelog - Gost-DOM Webref
 
 
+## [0.5.13](https://github.com/gost-dom/webref/compare/v0.5.12...v0.5.13) (2025-12-30)
+
 ## [0.5.12](https://github.com/gost-dom/webref/compare/v0.5.11...v0.5.12) (2025-12-29)
 
 
